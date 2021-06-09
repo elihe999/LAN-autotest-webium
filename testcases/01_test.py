@@ -16,7 +16,7 @@ class BaiduPage(BasePage):
     text_field = wordlist.return_find_elem('searchbar')
 
 class ResultItem(WebElement):
-    link = Find(Link, By.XPATH, './/h3/a')
+    link = Finds(Link, By.XPATH, './/h3/a')
 
 
 class ResultsPage(BasePage):
@@ -39,12 +39,12 @@ def testcases(*args, **kwargs):
     home_page.text_field.send_keys('Page Object')
     # home_page.button.click()
     Actions().move_n_click(home_page.button)
-    results_page = ResultsPage()
+    print("Go result page")
+    # results_page = ResultsPage()
     # print('Results summary: ' + results_page.stat.text)
-    for item in results_page.results:
-        # print(item.link.text)
-        pass # todo
-    get_driver().quit()
+    # for item in results_page.results:
+    #     print(item.link.text)
+    #     pass # todo
     return case_result
 
 def testconfig():

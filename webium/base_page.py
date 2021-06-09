@@ -82,3 +82,6 @@ class BasePage(object):
     
     def clean_cache(self):
         self.driver.delete_all_cookies()
+    
+    def close(self):
+        self._driver.close()

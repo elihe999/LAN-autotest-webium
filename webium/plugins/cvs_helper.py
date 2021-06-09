@@ -1,16 +1,21 @@
 import csv
+import errno
 import os
 from selenium.webdriver.common.by import By
 from webium import Find, Finds
 
+"""
+Load a cvs
+name  |  method  |  context
+"""
 class load_custom_loc():
     key_list = []
     replace_list = []
-    def __init__(self, file_name):
-        if os.path.isfile(file_name):
+    def __init__(self, filename):
+        if os.path.isfile(filename):
             temp_with_type = []
             temp_replace = []
-            with open(file_name) as f:
+            with open(filename) as f:
                 f_cvs = csv.reader(f)
                 for row in f_cvs:
                     if len(row) == 3:
@@ -26,9 +31,12 @@ class load_custom_loc():
                             "context": row[1]
                         }
                         temp_replace.append(pending)
-
+            # End with region
             self.key_list = temp_with_type
             self.replace_list = temp_replace
+        else:
+            print("File not found")
+            raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), filename)
 
     def get_by_value(self, name=""):
         for item in self.key_list:

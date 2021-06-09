@@ -10,9 +10,10 @@
 #         msecs = (endTime - startTime) * 1000
 #         print("time is %d ms" %msecs)
 #     return wrapper
+__mac_address = ''
 
-# simple loop
-def dhcp_loop(func):
+# Update ip by arp
+def update_ip(func):
     import time
     from webium.plugins.networking.Scanners.arp_scanner import ArpScan
     from webium.plugins.networking.Utils.base import Base
@@ -22,6 +23,10 @@ def dhcp_loop(func):
                                         message='Please select a network interface for script' +
                                             'from table: ')
     __mac_address = ''
+
+    def __init__(*args, **kwargs):
+        __get_mac(kwargs['ip'], kwargs['flag'])
+
     def __get_mac(orig_ip, stop_flag):
         # region arp scan
         target_ip = orig_ip
@@ -42,9 +47,10 @@ def dhcp_loop(func):
             base.print_success('Mac: ', results[0]['mac-address'])
             global __mac_address
             __mac_address = results[0]['mac-address']
+            return __mac_address
         # end region
 
-    def __arp_scan(stop_flag, ip) -> bool:
+    def __arp_scan(stop_flag, ip):
         arp_scan: ArpScan = ArpScan(network_interface=current_network_interface)
         global __mac_address
         if __mac_address != "":
@@ -54,52 +60,11 @@ def dhcp_loop(func):
             base.print_error("Can not find Device MAC Address!!")
             return False
 
-    def __tick(max, flag):
-        _init = 0
-        while max > _init and flag == False:
-            time.sleep(1)
-            _init = _init + 1
-        return
-
     def wrapper(*args, **kwargs):
-        assert 'ip' in kwargs.keys()
-        assert 'passwd' in kwargs.keys()
-        assert 'sleep' in kwargs.keys()
-        assert 'flag' in kwargs.keys()
-        if kwargs['flag']:
-            return
-        interal = 0
-        base: Base = Base(admin_only=True, available_platforms=['Linux', 'Darwin', 'Windows'])
-        __get_mac(kwargs['ip'], kwargs['flag'])
         current_ip = kwargs['ip']
-        # while region
-        while(interal < kwargs['loop']):
-            if kwargs['flag']:
-                break
-            base.print_info("Current Loop is: " + str(interal))
-            interal = interal + 1
-            # region main
-            __arp_scan(kwargs['flag'], current_ip)
-            func(*args, **kwargs)
-            # end region
-            # region Sleep
-            if kwargs['flag']:
-                break
-            if kwargs['sleep'] > 0:
-                __tick(kwargs['sleep'], kwargs['flag'])
-            else:
-                print("Default Sleep: 80")
-                __tick(80, kwargs['flag'])
-            # end region
-        # end while region
-        print("Finish dhcploop wrapper")
-        return
+        # if kwargs[]
+        # __get_mac(kwargs['ip'], kwargs['flag'])
+        __arp_scan(kwargs['flag'], current_ip)
+        func(*args, **kwargs)
+        print("Finish arp-scan wrapper")
     return wrapper
-
-# static url
-def static_loop(func):
-    pass
-
-# todo: ipv6
-def ipv6_loop(func):
-    pass

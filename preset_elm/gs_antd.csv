@@ -1,0 +1,12 @@
+loginbox,id,login-box
+usernameinput,classname,gwt-TextBox
+passwordinput,classname,gwt-PasswordTextBox
+loginsubmit,classname,gwt-Button
+loginboxlangselect,xpath,//*[@id="localeSelect"]/span
+
+infopopout,xpath,//*[@class='left message']/p
+infopopoutclose,xpath,//div[@class="popupContent"]//span[@class="closebtn"]
+resetheadingbox,xpath,//div[@class="heading"]/div[@class="gwt-HTML"]
+resetpassword,xpath,//input[@class="gwt-PasswordTextBox"]
+popupContent,classname,popupContent
+topBanner,id,topBanner
