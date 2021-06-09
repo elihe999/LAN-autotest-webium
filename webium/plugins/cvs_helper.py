@@ -28,6 +28,7 @@ class load_custom_loc():
                     elif len(row) == 2:
                         pending = {
                             "name": row[0],
+                            "method": 'xpath',
                             "context": row[1]
                         }
                         temp_replace.append(pending)

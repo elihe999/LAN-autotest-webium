@@ -28,11 +28,10 @@ def read_suite_list():
         return suite_list
 
 def dhcp_testsuite(func):
-    _test_result = TestResult()
 
-    def __tick(max, flag):
+    def __tick(max):
         _init = 0
-        while max > _init and flag == False:
+        while max > _init:
             time.sleep(1)
             _init = _init + 1
         return
@@ -40,33 +39,25 @@ def dhcp_testsuite(func):
     @update_ip
     def __run_loop(*args, **kwargs):
         print("New loop:")
+        assert 'suite_info' in kwargs.keys()
         try:
-            model = importlib.import_module(_g_default_folder_name+"."+_test_result.current_case)
+            model = importlib.import_module(_g_default_folder_name+"."+kwargs['suite_info'].current_case)
             assert 'ip' in kwargs.keys()
             assert 'passwd' in kwargs.keys()
             assert 'sleep' in kwargs.keys()
             assert 'flag' in kwargs.keys()
-            if kwargs['flag']:
-                print("Stop")
-                return
+            #
             interal = 0
-            print(interal)
-            model.testcases(*args, **kwargs)
-            while(interal < kwargs['loop']):
-                if kwargs['flag']:
-                    break
+            while(interal < kwargs['suite_info'].case_loop):
                 interal = interal + 1
                 # region main
                 model.testcases(*args, **kwargs)
                 # end region
-                # region Sleep
-                if kwargs['flag']:
-                    break
                 if kwargs['sleep'] > 0:
-                    __tick(kwargs['sleep'], kwargs['flag'])
+                    __tick(kwargs['sleep'])
                 else:
                     print("Default Sleep: 80")
-                    __tick(80, kwargs['flag'])
+                    __tick(80)
         except BaseException as e:
             print("__run_loop: ", e)
             return None
@@ -76,6 +67,7 @@ def dhcp_testsuite(func):
         assert 'passwd' in kwargs.keys()
         assert 'sleep' in kwargs.keys()
         assert 'flag' in kwargs.keys()
+        assert 'suite_info' in kwargs.keys()
         print("======\tTest Suite Begin...\t======")
         global _g_default_folder_name
         testcases = read_suite_list()
@@ -85,10 +77,10 @@ def dhcp_testsuite(func):
             print(case_name)
             # End debug region
             try:
-                kwargs['loop'] = int(loop_number)
-                print(kwargs['loop'])
-                _test_result.current_case = case_name
-                print(_test_result.current_case)
+                kwargs['suite_info'].case_loop = int(loop_number)
+                print(kwargs['suite_info'].case_loop)
+                kwargs['suite_info'].current_case = case_name
+                print(case_name)
                 __run_loop(*args, **kwargs)
             except BaseException as e:
                 print("webium\testsuite\standard.py: ", repr(e))
@@ -97,10 +89,3 @@ def dhcp_testsuite(func):
         func(*args, **kwargs)
     # RETRUN WARPPER
     return wrapper
-
-class TestResult:
-    total_number = 0
-    success_number = 0
-    failed_number = 0
-    date_string = ""
-    current_case = ""

@@ -4,13 +4,24 @@ from webium.testsuite.standard import dhcp_testsuite
 import time
 # from nose.tools import assert_false, ok_, eq_
 
+class TestResult:
+    total_number = 0
+    success_number = 0
+    failed_number = 0
+    date_string = ""
+    current_case = ""
+    current_index = 0
+    stop_flag = 0
+    case_loop = 1
+
 @dhcp_testsuite
-def myfun(ip, passwd, sleep, flag, initwd='admin', username='admin', loop=1):
+def myfun(ip, passwd, sleep, flag, suite_info, initwd='admin', username='admin'):
     print("cleaning")
     time.sleep(sleep)
 
 Test = False
-myfun(ip='192.168.92.48', passwd='1', sleep=3, flag=Test)
+newTestSuite = TestResult()
+myfun(ip='192.168.92.41', passwd='1', sleep=3, flag=Test, suite_info=newTestSuite)
 
 # from selenium.common.exceptions import TimeoutException
 # from selenium.webdriver.common.by import By

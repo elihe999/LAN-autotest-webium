@@ -1,31 +1,22 @@
 #-*- coding : utf-8-*-
 # coding:unicode_escape
 
-# example
-# def deco(func):
-#     def wrapper():
-#         startTime = time.time()
-#         func()
-#         endTime = time.time()
-#         msecs = (endTime - startTime) * 1000
-#         print("time is %d ms" %msecs)
-#     return wrapper
 __mac_address = ''
+current_network_interface = ''
+begin = True
 
 # Update ip by arp
 def update_ip(func):
     import time
     from webium.plugins.networking.Scanners.arp_scanner import ArpScan
     from webium.plugins.networking.Utils.base import Base
+    __mac_address = ''
+
     base: Base = Base(admin_only=True, available_platforms=['Linux', 'Darwin', 'Windows'])
     current_network_interface: str = \
         base.network_interface_selection(interface_name=None,
-                                        message='Please select a network interface for script' +
-                                            'from table: ')
-    __mac_address = ''
-
-    def __init__(*args, **kwargs):
-        __get_mac(kwargs['ip'], kwargs['flag'])
+                                    message='Please select a network interface for script' +
+                                        'from table: ')
 
     def __get_mac(orig_ip, stop_flag):
         # region arp scan
@@ -61,10 +52,19 @@ def update_ip(func):
             return False
 
     def wrapper(*args, **kwargs):
-        current_ip = kwargs['ip']
-        # if kwargs[]
-        # __get_mac(kwargs['ip'], kwargs['flag'])
-        __arp_scan(kwargs['flag'], current_ip)
-        func(*args, **kwargs)
-        print("Finish arp-scan wrapper")
+        try:
+            assert 'ip' in kwargs.keys()
+            assert 'passwd' in kwargs.keys()
+            assert 'sleep' in kwargs.keys()
+            assert 'flag' in kwargs.keys()
+            assert 'suite_info' in kwargs.keys()
+            current_ip = kwargs['ip']
+            if begin:
+                __get_mac(kwargs['ip'], kwargs['flag'])
+            __arp_scan(kwargs['flag'], current_ip)
+            print(kwargs['suite_info'])
+            func(*args, **kwargs)
+            print("Finish arp-scan wrapper")
+        except BaseException as e:
+            print("webium_pipes_loops: ", e)
     return wrapper

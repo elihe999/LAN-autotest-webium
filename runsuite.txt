@@ -1,2 +1,1 @@
-01_test,3
-02_test2,2
+gs01_grp261x_login,3
