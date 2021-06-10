@@ -1,6 +1,9 @@
 # LAN-autotest-webium
 
 The repo is FORK form [wgnet/webium](https://github.com/wgnet/webium).
+
+Also from Poium [SeldomQA/poium](https://github.com/SeldomQA/poium)
+
 ## Todo
 
 - Test Suite Module
@@ -15,6 +18,11 @@ The repo is FORK form [wgnet/webium](https://github.com/wgnet/webium).
 ```python
 wordlist = cvs_helper.load_custom_loc('preset_elm/my_baidu_example.csv')
 ```
+TODO: 多种后缀
+
+## Page Object (PO)
+
+
 
 ## Issue
 
