@@ -1,9 +1,8 @@
 # LAN-autotest-webium
 
-The repo is FORK form [wgnet/webium](https://github.com/wgnet/webium).
+This repo is FORK form Webium [wgnet/webium](https://github.com/wgnet/webium).
 
-Also from Poium [SeldomQA/poium](https://github.com/SeldomQA/poium)
-
+Also FORK from Poium [SeldomQA/poium](https://github.com/SeldomQA/wpoium).
 ## Todo
 
 - Test Suite Module

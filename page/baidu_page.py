@@ -1,4 +1,4 @@
-from poium import Page, Element
+from wpoium import Page, Element
 
 
 class BaiduPage(Page):

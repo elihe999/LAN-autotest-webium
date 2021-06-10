@@ -1,5 +1,5 @@
-from poium.common import logging
-from poium.common.exceptions import CSSFindElementError
+from wpoium.common import logging
+from wpoium.common.exceptions import CSSFindElementError
 from selenium.common.exceptions import JavascriptException
 
 

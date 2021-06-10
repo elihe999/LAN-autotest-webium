@@ -1,7 +1,7 @@
 import wda
 
-from poium.settings import Setting
-from poium.common import logging
+from wpoium.settings import Setting
+from wpoium.common import logging
 
 wda.DEBUG = False  # default False
 wda.HTTP_TIMEOUT = 180.0  # default 60.0 seconds

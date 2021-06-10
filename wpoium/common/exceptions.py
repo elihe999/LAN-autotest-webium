@@ -1,11 +1,11 @@
 """
-Exceptions that may happen in all the poium code.
+Exceptions that may happen in all the wpoium code.
 """
 
 
 class PoiumException(Exception):
     """
-    Base poium exception.
+    Base wpoium exception.
     """
 
     def __init__(self, msg=None, screen=None, stacktrace=None):

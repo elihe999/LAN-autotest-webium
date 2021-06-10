@@ -1,6 +1,6 @@
 import os
 import uiautomator2 as u2
-from poium.settings import Setting
+from wpoium.settings import Setting
 
 
 def connect():

@@ -1,4 +1,4 @@
-from poium.settings import Setting
+from wpoium.settings import Setting
 
 
 def insert_assert(describe, result):

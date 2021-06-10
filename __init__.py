@@ -1,1 +1,1 @@
-from .poium import Poium
+from .wpoium import WPoium

@@ -3,7 +3,7 @@ import platform
 import logging.handlers
 from colorama import Fore, Style
 
-_logger = logging.getLogger('poium')
+_logger = logging.getLogger('wpoium')
 _logger.setLevel(logging.DEBUG)
 _handler = logging.StreamHandler(sys.stdout)
 _handler.setFormatter(logging.Formatter('%(asctime)s %(message)s'))

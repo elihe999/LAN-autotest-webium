@@ -7,7 +7,7 @@ from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import NoAlertPresentException
 from appium.webdriver.common.touch_action import TouchAction as MobileTouchAction
 
-from poium.page_objects import PageObject
+from wpoium.page_objects import PageObject
 
 
 class Page(PageObject):

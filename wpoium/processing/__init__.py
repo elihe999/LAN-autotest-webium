@@ -3,9 +3,9 @@ import time
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
-from poium.settings import Setting
-from poium.common import logging
-from poium.settings import BASE_DIR
+from wpoium.settings import Setting
+from wpoium.common import logging
+from wpoium.settings import BASE_DIR
 
 
 def compress_image(infile):

@@ -1,9 +1,9 @@
 import os
 import time
-from poium.settings import Setting
-from poium.common import logging
-from poium.processing import processing, screenshots_name
-from poium.common.assert_des import insert_assert
+from wpoium.settings import Setting
+from wpoium.common import logging
+from wpoium.processing import processing, screenshots_name
+from wpoium.common.assert_des import insert_assert
 
 
 LOCATOR_LIST = [

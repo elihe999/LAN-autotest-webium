@@ -9,12 +9,12 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import WebDriverException
 from appium.webdriver.common.mobileby import MobileBy
-from poium.common.exceptions import PageElementError
-from poium.common.exceptions import FindElementTypesError
-from poium.common import logging
+from wpoium.common.exceptions import PageElementError
+from wpoium.common.exceptions import FindElementTypesError
+from wpoium.common import logging
 from func_timeout import func_set_timeout
 from func_timeout.exceptions import FunctionTimedOut
-from poium.config import Browser
+from wpoium.config import Browser
 
 
 # Map PageElement constructor arguments to webdriver locator enums
