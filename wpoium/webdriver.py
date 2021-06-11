@@ -6,7 +6,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import NoAlertPresentException
 from appium.webdriver.common.touch_action import TouchAction as MobileTouchAction
-
+from selenium.webdriver.support.ui import Select, WebDriverWait
 from wpoium.page_objects import PageObject
 
 
@@ -370,3 +370,7 @@ class Page(PageObject):
         Swipe from one point to another point, for an optional duration.
         """
         self.driver.swipe(start_x, start_y, end_x, end_y, duration)
+
+    def custom_wait(self, waitname=8):
+        number = int(waitname)
+        return WebDriverWait(self.driver, number)

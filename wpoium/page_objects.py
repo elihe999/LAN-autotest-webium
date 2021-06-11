@@ -65,6 +65,9 @@ class PageObject(object):
         root_uri = self.root_uri or ''
         self.driver.get(root_uri + uri)
         self.driver.implicitly_wait(5)
+    
+    def refresh(self):
+        self.driver.refresh()
 
 
 class Element(object):

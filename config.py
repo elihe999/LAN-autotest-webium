@@ -9,7 +9,7 @@ class RunConfig:
     cases_path = os.path.join(PRO_PATH, "testcases")
 
     # 配置浏览器驱动类型(chrome/firefox/chrome-headless/firefox-headless)。
-    driver_type = "chrome"
+    driver_type = "chrome-headless"
 
     # 配置运行的 URL
     url = "https://www.baidu.com"
@@ -25,3 +25,7 @@ class RunConfig:
 
     # 报告路径
     NEW_REPORT = "output"
+
+    # browsermod Proxy
+    # browsermob_proxy = "E:\githubstore\LAN-autotest-webium\\networking\BrowsermobProxyDist\\browsermob-proxy"
+    # browsermob_proxy_port = 8889

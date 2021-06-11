@@ -6,6 +6,7 @@ from selenium.webdriver import Remote
 from selenium.webdriver.chrome.options import Options as CH_Options
 from selenium.webdriver.firefox.options import Options as FF_Options
 from config import RunConfig
+from browsermobproxy import Server
 
 # 项目目录配置
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -30,6 +31,16 @@ def pytest_html_results_table_row(report, cells):
         cells.insert(2, html.td(report.description))
         cells.pop()
 
+def pytest_configure(config):
+    # 添加接口地址与项目名称
+    config._metadata["项目名称"] = "GSATE Web UI"
+    # 删除Java_Home
+    config._metadata.pop("JAVA_HOME")
+
+@pytest.mark.optionalhook
+def pytest_html_results_summary(prefix):
+    prefix.extend([html.p("Auto Test Version: 0.0.1 Preview")])
+    prefix.extend([html.p("DUT Version: GRP260x")])
 
 @pytest.mark.hookwrapper
 def pytest_runtest_makereport(item):
@@ -41,6 +52,7 @@ def pytest_runtest_makereport(item):
     outcome = yield
     report = outcome.get_result()
     report.description = description_html(item.function.__doc__)
+    report.nodeid = report.nodeid.encode("utf-8").decode("unicode_escape")
     extra = getattr(report, 'extra', [])
     if report.when == 'call' or report.when == "setup":
         xfail = hasattr(report, 'wasxfail')
@@ -97,8 +109,11 @@ def capture_screenshots(case_name):
         raise NameError('没有初始化测试报告目录')
     else:
         image_dir = os.path.join(RunConfig.NEW_REPORT, "image", file_name)
-        if RunConfig is not None:
-            RunConfig.driver.save_screenshot(image_dir)
+        if RunConfig.driver is not None:
+            try:
+                RunConfig.driver.save_screenshot(image_dir)
+            except BaseException:
+                pass
 
 
 # 启动浏览器
@@ -126,6 +141,15 @@ def browser():
         chrome_options.add_argument("--headless")
         chrome_options.add_argument('--disable-gpu')
 
+        if hasattr(RunConfig, "browsermob_proxy"):
+            # browsermobproxy
+            opt_dict={'port':8888}
+            if hasattr(RunConfig, "browsermob_proxy"):
+                opt_dict={'port':RunConfig.browsermob_proxy_port}
+            server = Server(path=RunConfig.browsermob_proxy, options=opt_dict)
+            server.start()
+            proxy = server.create_proxy()
+            chrome_options.add_argument('--proxy-server={0}'.format(proxy.proxy))
         if hasattr(RunConfig, "chrome_disable_plugins"):
             chrome_options.add_argument('--disable-plugins')
         if hasattr(RunConfig, "chrome_nosandbox"):
@@ -139,7 +163,6 @@ def browser():
         if hasattr(RunConfig, "chrome_disable_plugins"):
             chrome_options.add_argument('--disable-plugins')
         # chrome_options.add_argument("--window-size=1920x1080")
-
         # service
         service_args = []
         if hasattr(RunConfig, "service_load_images"):
@@ -155,6 +178,7 @@ def browser():
             service_args.append('--ignore-ssl-errors=true')
         else:
             service_args.append('--ignore-ssl-errors=false')
+
         driver = webdriver.Chrome(options=chrome_options, service_args=service_args)
 
     elif RunConfig.driver_type == "firefox-headless":
