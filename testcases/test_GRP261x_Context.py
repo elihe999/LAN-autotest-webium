@@ -62,6 +62,7 @@ class TestGrp261x:
         page.get(str(base_url)+"/#signin:loggedOut")
         sleep(2)
         print(browser.title)
+        page.write_requests_log()
         assert browser.title == "Grandstream | Executive IP Phone"
 
     @pytest.mark.run(order=2)
@@ -91,7 +92,9 @@ class TestGrp261x:
         page.submit_button.click()
         page.set_window_size()
         sleep(2)
+        page.write_requests_log()
         authed_page = Grp261xPageStatusAccount(browser)
+        authed_page.write_requests_log()
         sleep(2)
         assert authed_page.ver_label
 
