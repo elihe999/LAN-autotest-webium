@@ -381,8 +381,17 @@ class Page(PageObject):
     def write_requests_log(self):
         # logs = [json.loads(log['message'])['message']
         #         for log in self.driver.get_log('performance')]
-        file = open('devtools.json', 'w', encoding='utf-8')
-        for entry in self.driver.get_log('performance'):
-            params = json.loads(entry.get('message')).get('message')
-            file.write(json.dumps(params))
-        file.close()
+        # file = open('devtools.json', 'w', encoding='utf-8')
+        # for entry in self.driver.get_log('performance'):
+        #     params = json.loads(entry.get('message')).get('message')
+        #     file.write(json.dumps(params))
+        # file.close()
+
+        import codecs
+        info=[]
+        for entry in self.driver.get_log('browser'):
+            if entry['level']=='SEVERE':
+                info.append(entry)
+        j = json.dumps(info, indent=4,ensure_ascii=False)
+        with codecs.open('devtools.json', "w", "utf-8") as f:
+                f.write(j)

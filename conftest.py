@@ -190,7 +190,7 @@ def browser():
         chrome_options.add_experimental_option('w3c', False)
         caps = DesiredCapabilities.CHROME
         caps['loggingPrefs'] = {'performance': 'ALL'}
-        # caps['goog:loggingPrefs'] = {'performance': 'ALL'}
+        # caps['goog:loggingPrefs'] = {'browswer': 'ALL'}
         driver = webdriver.Chrome(options=chrome_options, service_args=service_args, desired_capabilities=caps)
         # proxy.new_har("test", options={'captureContent': True, 'captureHeaders': True})     # 开启代理监控，如果不监控会拿不到请求内容
 
