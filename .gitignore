@@ -130,3 +130,4 @@ dmypy.json
 
 # report
 output/
+autoIt_script/*.exe
