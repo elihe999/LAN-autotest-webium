@@ -92,7 +92,14 @@ class mainWindow(QObject):
         self.init_env(REPORT_DIR)
         html_report = os.path.join(RunConfig_NEW_REPORT, "report.html")
         xml_report = os.path.join(RunConfig_NEW_REPORT, "junit-xml.xml")
-        pytest.main(["-s", "-v", CASEPATH])
+        suite_name = "test_GRP261x_Context.py::TestGrp261x::test_device_login"
+        pytest.main(["-s", "-v", os.path.join( CASEPATH, suite_name ),
+                     "--html=" + html_report,
+                     "--name=" + "test",
+                     "--passwd=" + "test",
+                     "--base_url=" + "test",
+                     "--junit-xml=" + xml_report,
+                     "--self-contained-html"])
         logger.info("运行结束，生成测试报告！")
 
 # if __name__ == "__main__":
