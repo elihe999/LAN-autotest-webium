@@ -31,11 +31,11 @@ def pytest_html_results_table_row(report, cells):
         cells.insert(2, html.td(report.description))
         cells.pop()
 
-def pytest_configure(config):
+# def pytest_configure(config):
     # 添加接口地址与项目名称
-    config._metadata["项目名称"] = "GSATE Web UI"
-    # 删除Java_Home
-    config._metadata.pop("JAVA_HOME")
+    # config._metadata["项目名称"] = "GSATE Web UI"
+    # # 删除Java_Home
+    # config._metadata.pop("JAVA_HOME")
 
 @pytest.mark.optionalhook
 def pytest_html_results_summary(prefix):
