@@ -129,5 +129,5 @@ dmypy.json
 .pyre/
 
 # report
-output/
+output/*
 autoIt_script/*.exe

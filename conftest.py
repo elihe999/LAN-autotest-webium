@@ -14,20 +14,20 @@ REPORT_DIR = BASE_DIR + "/output/"
 proxy = None
 
 # 定义基本测试环境
-# @pytest.fixture(scope='function')
+# @pytest.fixture(scope="function")
 # def base_url():
 #     return RunConfig.url
 
 
 # 设置用例描述表头
 def pytest_html_results_table_header(cells):
-    cells.insert(2, html.th('Description'))
+    cells.insert(2, html.th("Description"))
     cells.pop()
 
 
 # 设置用例描述表格
 def pytest_html_results_table_row(report, cells):
-    if hasattr(report, 'description'):
+    if hasattr(report, "description"):
         cells.insert(2, html.td(report.description))
         cells.pop()
 
@@ -35,7 +35,7 @@ def pytest_configure(config):
     # 添加接口地址与项目名称
     config._metadata["项目名称"] = "GSATE Web UI"
     # 删除Java_Home
-    config._metadata.pop("JAVA_HOME")
+    # config._metadata.pop("JAVA_HOME")
 
 @pytest.mark.optionalhook
 def pytest_html_results_summary(prefix):
@@ -48,14 +48,14 @@ def pytest_runtest_makereport(item):
     用于向测试用例中添加用例的开始时间、内部注释，和失败截图等.
     :param item:
     """
-    pytest_html = item.config.pluginmanager.getplugin('html')
+    pytest_html = item.config.pluginmanager.getplugin("html")
     outcome = yield
     report = outcome.get_result()
     report.description = description_html(item.function.__doc__)
     report.nodeid = report.nodeid.encode("utf-8").decode("unicode_escape")
-    extra = getattr(report, 'extra', [])
-    if report.when == 'call' or report.when == "setup":
-        xfail = hasattr(report, 'wasxfail')
+    extra = getattr(report, "extra", [])
+    if report.when == "call" or report.when == "setup":
+        xfail = hasattr(report, "wasxfail")
         if (report.skipped and xfail) or (report.failed and not xfail):
             case_path = report.nodeid.replace("::", "_") + ".png"
             if "[" in case_path:
@@ -73,7 +73,7 @@ def pytest_runtest_makereport(item):
     # global proxy
     # proxy.wait_for_traffic_to_stop(1, 60)
     # # 保存har中的信息到本地
-    # with open('1.har', 'w',encoding='utf-8') as outfile:
+    # with open("1.har", "w",encoding="utf-8") as outfile:
     #     json.dump(proxy.har, outfile,indent=2,ensure_ascii=False)
 
 
@@ -89,7 +89,7 @@ def description_html(desc):
     for i in range(len(desc)):
         if i == 0:
             pass
-        elif desc[i] == '\n':
+        elif desc[i] == "\n":
             desc_ = desc_ + ";"
         else:
             desc_ = desc_ + desc[i]
@@ -112,7 +112,7 @@ def capture_screenshots(case_name):
     global driver
     file_name = case_name.split("/")[-1]
     if RunConfig.NEW_REPORT is None:
-        raise NameError('没有初始化测试报告目录')
+        raise NameError("没有初始化测试报告目录")
     else:
         image_dir = os.path.join(RunConfig.NEW_REPORT, "image", file_name)
         if RunConfig.driver is not None:
@@ -123,7 +123,7 @@ def capture_screenshots(case_name):
 
 
 # 启动浏览器
-@pytest.fixture(scope='session', autouse=True)
+@pytest.fixture(scope="session", autouse=True)
 def browser():
     """
     全局定义浏览器驱动
@@ -146,53 +146,53 @@ def browser():
         # chrome headless模式
         chrome_options = CH_Options()
         chrome_options.add_argument("--headless")
-        chrome_options.add_argument('--disable-gpu')
+        chrome_options.add_argument("--disable-gpu")
 
         if hasattr(RunConfig, "browsermob_proxy"):
             # browsermobproxy
             from browsermobproxy import Server
-            opt_dict={'port':8888}
+            opt_dict={"port":8888}
             if hasattr(RunConfig, "browsermob_proxy"):
-                opt_dict={'port':RunConfig.browsermob_proxy_port}
+                opt_dict={"port":RunConfig.browsermob_proxy_port}
             server = Server(path=RunConfig.browsermob_proxy, options=opt_dict)
             server.start()
             proxy = server.create_proxy()
-            chrome_options.add_argument('--proxy-server={0}'.format(proxy.proxy))
+            chrome_options.add_argument("--proxy-server={0}".format(proxy.proxy))
         if hasattr(RunConfig, "chrome_disable_plugins"):
-            chrome_options.add_argument('--disable-plugins')
+            chrome_options.add_argument("--disable-plugins")
         if hasattr(RunConfig, "chrome_nosandbox"):
-            chrome_options.add_argument('--no-sandbox')
+            chrome_options.add_argument("--no-sandbox")
         if hasattr(RunConfig, "chrome_disable_shmusage"):
-            chrome_options.add_argument('--disable-dev-shm-usage')
+            chrome_options.add_argument("--disable-dev-shm-usage")
         if hasattr(RunConfig, "chrome_ignore_certificate_errors"):
-            chrome_options.add_argument('--ignore-certificate-errors')
+            chrome_options.add_argument("--ignore-certificate-errors")
         if hasattr(RunConfig, "chrome_disable_gpu"):
-            chrome_options.add_argument('--disable-gpu')
+            chrome_options.add_argument("--disable-gpu")
         if hasattr(RunConfig, "chrome_disable_plugins"):
-            chrome_options.add_argument('--disable-plugins')
+            chrome_options.add_argument("--disable-plugins")
         # chrome_options.add_argument("--window-size=1920x1080")
         # service
         service_args = []
         if hasattr(RunConfig, "service_load_images"):
-            service_args.append('--load-images=yes')
+            service_args.append("--load-images=yes")
         else:
-            service_args.append('--load-images=no')
+            service_args.append("--load-images=no")
         if hasattr(RunConfig, "service_disk_cache"):
-            service_args.append('--disk-cache=yes')
+            service_args.append("--disk-cache=yes")
         else:
-            service_args.append('--disk-cache=no')
+            service_args.append("--disk-cache=no")
         if hasattr(RunConfig, "service_ignore_ssl_errors"):
-            service_args.append('--ignore-ssl-errors=true')
+            service_args.append("--ignore-ssl-errors=true")
         else:
-            service_args.append('--ignore-ssl-errors=false')
+            service_args.append("--ignore-ssl-errors=false")
         # 必须有这一句，才能在后面获取到performance
 
-        chrome_options.add_experimental_option('w3c', False)
+        chrome_options.add_experimental_option("w3c", False)
         caps = DesiredCapabilities.CHROME
-        caps['loggingPrefs'] = {'performance': 'ALL'}
-        # caps['goog:loggingPrefs'] = {'browswer': 'ALL'}
+        caps["loggingPrefs"] = {"performance": "ALL"}
+        # caps["goog:loggingPrefs"] = {"browswer": "ALL"}
         driver = webdriver.Chrome(options=chrome_options, service_args=service_args, desired_capabilities=caps)
-        # proxy.new_har("test", options={'captureContent': True, 'captureHeaders': True})     # 开启代理监控，如果不监控会拿不到请求内容
+        # proxy.new_har("test", options={"captureContent": True, "captureHeaders": True})     # 开启代理监控，如果不监控会拿不到请求内容
 
     elif RunConfig.driver_type == "firefox-headless":
         # firefox headless模式
@@ -202,7 +202,7 @@ def browser():
 
     elif RunConfig.driver_type == "grid":
         # 通过远程节点运行
-        driver = Remote(command_executor='http://localhost:4444/wd/hub',
+        driver = Remote(command_executor="http://localhost:4444/wd/hub",
                         desired_capabilities={
                               "browserName": "chrome",
                         })
@@ -223,23 +223,31 @@ def browser_close():
     driver.quit()
     print("test end!")
 
-def pytest_addoption(parser):
-    parser.addoption("--name", action="store", default="default name")
-    parser.addoption("--base_url", action="store", default="default name")
-    parser.addoption("--passwd", action="store", default="default name")
+# def pytest_addoption(parser):
+#     parser.addoption("--name", action="store", default="None")
+#     parser.addoption("--base_url", action="store", default="None")
+#     parser.addoption("--passwd", action="store", default="None")
 
-# create argument
-def pytest_generate_tests(metafunc):
-    # This is called for every test. Only get/set command line arguments
-    # if the argument is specified in the list of test "fixturenames".
-    option_value = metafunc.config.option.name
-    if 'name' in metafunc.fixturenames and option_value is not None:
-        metafunc.parametrize("name", [option_value])
-    if 'passwd' in metafunc.fixturenames and option_value is not None:
-        metafunc.parametrize("passwd", [option_value])
-    if 'base_url' in metafunc.fixturenames and option_value is not None:
-        metafunc.parametrize("base_url", [option_value])
-    
+# @pytest.fixture(scope="session", autouse=True)
+# def name(request):
+#     '''获取命令行参数'''
+#     # 获取命令行参数给到环境变量
+#     os.environ["name"] = request.config.getoption("--name")
+#     print("11:%s"%os.environ["name"])
+
+# @pytest.fixture(scope="session", autouse=True)
+# def base_url(request):
+#     '''获取命令行参数'''
+#     # 获取命令行参数给到环境变量
+#     os.environ["base_url"] = request.config.getoption("--base_url")
+#     print("11:%s"%os.environ["base_url"])
+
+# @pytest.fixture(scope="session", autouse=True)
+# def passwd(request):
+#     '''获取命令行参数'''
+#     # 获取命令行参数给到环境变量
+#     os.environ["passwd"] = request.config.getoption("--passwd")
+#     print("11:%s"%os.environ["passwd"])
 
 if __name__ == "__main__":
     capture_screenshots("test_dir/test_baidu_search.test_search_python.png")

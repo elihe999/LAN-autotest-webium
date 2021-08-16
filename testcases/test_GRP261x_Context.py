@@ -45,7 +45,7 @@ class TestGrp261x:
 
     """Basic Test"""
     @pytest.mark.run(order=1)
-    def test_device_title(self, name, passwd, browser, base_url):
+    def test_device_title(self, browser, metadata):
         """
         Name: Check Web Title
         Test Step:
@@ -54,41 +54,44 @@ class TestGrp261x:
         CheckPoint:
         * Check Title for OEM
         """
+        print(metadata.pop("passwd", None))
+        print(metadata.pop("base_url", None))
+        print(metadata.pop("name", None))
         page = Grp261xLoginPage(browser)
-        page.get(str(base_url)+"/#signin:loggedOut")
+        page.open()
         sleep(2)
         print(browser.title)
         page.write_requests_log()
         assert browser.title == "Grandstream | Executive IP Phone"
 
-    @pytest.mark.run(order=2)
-    def test_device_login(self, name, passwd, browser, base_url):
-        """
-        Name: Check Login
-        Test Step:
-        1. Open Device IP
-        2. Entry username and password
-        CheckPoint: version
-        * Login Success
-        """
-        page = Grp261xLoginPage(browser)
-        page.get(base_url)
-        try:
-            page.custom_wait(12).until_not(lambda browser: page.popout_panel_glass)
-        except BaseException:
-            pass
-        sleep(1)
-        page.username_input = name
-        page.password_input = passwd
-        sleep(1)
-        page.submit_button.click()
-        page.set_window_size()
-        sleep(2)
-        page.write_requests_log()
-        authed_page = Grp261xPageStatusAccount(browser)
-        authed_page.write_requests_log()
-        sleep(2)
-        assert authed_page.ver_label
+    # @pytest.mark.run(order=2)
+    # def test_device_login(self, name, passwd, browser, base_url):
+    #     """
+    #     Name: Check Login
+    #     Test Step:
+    #     1. Open Device IP
+    #     2. Entry username and password
+    #     CheckPoint: version
+    #     * Login Success
+    #     """
+    #     page = Grp261xLoginPage(browser)
+    #     page.get(base_url)
+    #     try:
+    #         page.custom_wait(12).until_not(lambda browser: page.popout_panel_glass)
+    #     except BaseException:
+    #         pass
+    #     sleep(1)
+    #     page.username_input = name
+    #     page.password_input = passwd
+    #     sleep(1)
+    #     page.submit_button.click()
+    #     page.set_window_size()
+    #     sleep(2)
+    #     page.write_requests_log()
+    #     authed_page = Grp261xPageStatusAccount(browser)
+    #     authed_page.write_requests_log()
+    #     sleep(2)
+    #     assert authed_page.ver_label
 
 if __name__ == '__main__':
     pytest.main(["-v", "-s", "test_GRP261x_Context.py::TestGrp261x::test_device_login"])

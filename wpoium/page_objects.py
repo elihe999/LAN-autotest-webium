@@ -60,10 +60,13 @@ class PageObject(object):
 
     def get(self, uri):
         """
-        :param uri:  URI to GET, based off of the root_uri attribute.
+        :param uri: URI to GET, based off of the root_uri attribute.
         """
         root_uri = self.root_uri or ''
-        self.driver.get(root_uri + uri)
+        if len(root_uri) != 0:
+            self.driver.get(str(uri))
+        else:
+            self.driver.get(str(root_uri) + str(uri))
         self.driver.implicitly_wait(5)
     
     def refresh(self):

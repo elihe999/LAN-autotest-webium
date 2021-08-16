@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite errors="0" failures="1" hostname="Lenovo-PC" name="pytest" skipped="0" tests="1" time="3.764" timestamp="2021-08-16T17:52:47.980000"><testcase classname="testcases.test_GRP261x_Context.TestGrp261x" name="test_device_title" time="3.551"><failure message="AttributeError: 'Grp261xLoginPage' object has no attribute 'open'">self = &lt;testcases.test_GRP261x_Context.TestGrp261x object at 0x0000000004641358&gt;
+browser = &lt;selenium.webdriver.chrome.webdriver.WebDriver (session="a5ded5230fbb74db0140cc1b77f77f9a")&gt;
+metadata = {'JAVA_HOME': 'D:\\Program Files (x86)\\jdk\\', 'Packages': {'pluggy': '0.13.1', 'py': '1.10.0', 'pytest': '6.1.2'}, '...-7-6.1.7601-SP1', 'Plugins': {'html': '3.0.0', 'metadata': '1.11.0', 'ordering': '0.6', 'rerunfailures': '9.1.1'}, ...}
+
+    @pytest.mark.run(order=1)
+    def test_device_title(self, browser, metadata):
+        """
+        Name: Check Web Title
+        Test Step:
+        1. Open Device IP
+        2. Check Title on browser tab
+        CheckPoint:
+        * Check Title for OEM
+        """
+        print(metadata.pop("passwd", None))
+        print(metadata.pop("base_url", None))
+        print(metadata.pop("name", None))
+        page = Grp261xLoginPage(browser)
+&gt;       page.open()
+E       AttributeError: 'Grp261xLoginPage' object has no attribute 'open'
+
+testcases\test_GRP261x_Context.py:61: AttributeError</failure></testcase></testsuite></testsuites>

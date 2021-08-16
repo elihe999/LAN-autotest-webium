@@ -2,7 +2,7 @@ import csv
 import errno
 import os
 from selenium.webdriver.common.by import By
-from webium import Find, Finds
+from wpoium import Element, Elements, Browser, CSSElement
 
 """
 Load a cvs
@@ -54,42 +54,42 @@ class load_custom_loc():
         if tup_by_value == None:
             raise IndexError("Not matching keyword : " + name)
         if tup_by_value[0] == "id":
-            return Find(by = By.ID, value = tup_by_value[1])
+            return Element(id_=tup_by_value[1])
         if tup_by_value[0] == "name":
-            return Find(by = By.NAME, value = tup_by_value[1])
+            return Element(name=tup_by_value[1])
         if tup_by_value[0] == "classname":
-            return Find(by = By.CLASS_NAME, value = tup_by_value[1])
+            return Element(classname=tup_by_value[1])
         if tup_by_value[0] == "tagname":
-            return Find(by = By.TAG_NAME, value = tup_by_value[1])
+            return Element(tag=tup_by_value[1])
         if tup_by_value[0] == "linktext":
-            return Find(by = By.LINK_TEXT, value = tup_by_value[1])
+            return Element(class_name=tup_by_value[1])
         if tup_by_value[0] == "partiallink":
-            return Find(by = By.PARTIAL_LINK_TEXT, value = tup_by_value[1])
+            return Element(partial_link_text=tup_by_value[1])
         if tup_by_value[0] == "xpath":
-            return Find(by = By.XPATH, value = tup_by_value[1])
+            return Element(xpath=tup_by_value[1])
         if tup_by_value[0] == "cssselector":
-            return Find(by = By.CSS_SELECTOR, value = tup_by_value[1])
+            return Element(css=tup_by_value[1])
 
     def return_finds_elem(self, name=""):
         tup_by_value = self.get_by_value(name)
         if tup_by_value == None:
             raise IndexError("Not matching keyword : " + name)
         if tup_by_value[0] == "id":
-            return Finds(by = By.ID, value = tup_by_value[1])
+            return Elements(id_=tup_by_value[1])
         if tup_by_value[0] == "name":
-            return Finds(by = By.NAME, value = tup_by_value[1])
+            return Elements(name=tup_by_value[1])
         if tup_by_value[0] == "classname":
-            return Finds(by = By.CLASS_NAME, value = tup_by_value[1])
+            return Element(classname=tup_by_value[1])
         if tup_by_value[0] == "tagname":
-            return Finds(by = By.TAG_NAME, value = tup_by_value[1])
+            return Element(tag=tup_by_value[1])
         if tup_by_value[0] == "linktext":
-            return Finds(by = By.LINK_TEXT, value = tup_by_value[1])
+            return Element(class_name=tup_by_value[1])
         if tup_by_value[0] == "partiallink":
-            return Finds(by = By.PARTIAL_LINK_TEXT, value = tup_by_value[1])
+            return Element(partial_link_text=tup_by_value[1])
         if tup_by_value[0] == "xpath":
-            return Finds(by = By.XPATH, value = tup_by_value[1])
+            return Element(xpath=tup_by_value[1])
         if tup_by_value[0] == "cssselector":
-            return Finds(by = By.CSS_SELECTOR, value = tup_by_value[1])
+            return Element(css=tup_by_value[1])
 
     def return_simple_string(self, name=""):
         answer_string = self.get_simple_result(name)
