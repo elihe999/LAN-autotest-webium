@@ -24,7 +24,6 @@ def pytest_html_results_table_header(cells):
     cells.insert(2, html.th("Description"))
     cells.pop()
 
-
 # 设置用例描述表格
 def pytest_html_results_table_row(report, cells):
     if hasattr(report, "description"):
@@ -221,7 +220,7 @@ def browser():
 def browser_close():
     yield driver
     driver.quit()
-    print("test end!")
+    print("Test End!")
 
 if __name__ == "__main__":
     capture_screenshots("test_dir/test_baidu_search.test_search_python.png")

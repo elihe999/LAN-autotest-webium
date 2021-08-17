@@ -1,4 +1,5 @@
 from wpoium import Page, Element, Elements
+from wpoium.plugins import cvs_helper
 
 from os.path import dirname, abspath, join
 import sys
@@ -6,10 +7,10 @@ import sys
 base_path = dirname(dirname(abspath(__file__)))
 sys.path.insert(0, base_path)
 page_path = join(base_path, 'page')
-wordlist = cvs_helper.load_custom_loc( join( page_path, 'grp261x_ele.csv') )
+wordlist = cvs_helper.load_custom_loc( join( page_path, 'grp261x_elem.csv') )
 
 class Grp261xCommonPage(Page):
-    ver_label = return_finds_elem("versionLabel")
+    ver_label = wordlist.return_finds_elem("versionLabel")
         # xpath="/html/body/div[2]/div/div/div[4]/div/div[2]/div", describe="Version Label")
     top_banner = Element(
         xpath='//*[@id="topBanner"]/div/div[1]/div', describe="Top Banner")
@@ -120,9 +121,20 @@ class Grp261xPageAccountGeneral(Grp261xCommonPage):
 
 
 class Grp261xPageStatusNetworkStatus(Grp261xPageStatusAccount):
+    ns_status_labels = Elements(
+        xpath='//td[@id="main-pad"]/div[@class="pad-Main"]//div[@class="cell label"]', describe="Network Status Label")
+    ns_status_contents = Elements(
+        xpath='//td[@id="main-pad"]/div[@class="pad-Main"]//div[@class="cell contents"]', describe="Network Status Contents")
 
 class Grp261xPageStatusSystemInfo(Grp261xPageStatusAccount):
+    coredump_download_a = Elements(xpath='//tbody/tr[1]/td/div/table/tbody/tr[2]//a', describe="")
 
+# Share with Grp261xPageStatusSoftkey
 class Grp261xPageStatusVPK(Grp261xPageStatusAccount):
+    vpk_name = Elements(xpath='//td[1]/div[@class="column column-accounts"]/div', describe="")
+    vpk_mode = Elements(xpath='//td[2]/div[@class="column column-accounts"]/div', describe="")
+    vpk_account = Elements(xpath='//td[3]/div[@class="column column-accounts"]/div', describe="")
+    vpk_descript = Elements(xpath='//td[4]/div[@class="column column-accounts"]/div', describe="")
+    vpk_value = Elements(xpath='//td[5]/div[@class="column column-accounts"]/div', describe="")
 
-class Grp261xPageStatusSoftkey(Grp261xPageStatusAccount):
+

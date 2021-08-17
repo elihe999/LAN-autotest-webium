@@ -402,8 +402,7 @@ class Page(PageObject):
         import codecs
         info=[]
         for entry in self.driver.get_log('browser'):
-            if entry['level']=='SEVERE':
-                info.append(entry)
+            info.append(entry)
         j = json.dumps(info, indent=4,ensure_ascii=False)
         with codecs.open('devtools.json', "w", "utf-8") as f:
                 f.write(j)

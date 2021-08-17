@@ -26,6 +26,10 @@ def get_data(file_path):
             data.append(tuple(i.values()))
     return data
 
+@pytest.fixture(scope = 'session')
+def global_ip_addr():
+    return {'presentIpAddr': ''}
+
 """
 @name: web context test
 """
@@ -45,7 +49,7 @@ class TestGrp261x:
 
     """Basic Test"""
     @pytest.mark.run(order=1)
-    def test_device_title(self, browser, metadata):
+    def test_device_title(self, browser, metadata, global_ip_addr):
         """
         Name: Check Web Title
         Test Step:
@@ -57,6 +61,9 @@ class TestGrp261x:
         _passwd = metadata["passwd"]
         _url_str = metadata["base_url"]
         _name = metadata["name"]
+        # set ip addr        
+        global_ip_addr['presentIpAddr'] = _url_str
+
         page = Grp261xLoginPage(browser, url=_url_str)
         # test begin
         page.get(_url_str)
@@ -66,13 +73,16 @@ class TestGrp261x:
         assert browser.title == "Grandstream | Executive IP Phone"
 
     @pytest.mark.run(order=2)
-    def test_device_login(self, browser, metadata):
+    def test_device_login(self, browser, metadata, global_ip_addr):
         """
         Name: Check Login
         Test Step:
         1. Open Device IP
         2. Entry username and password
-        CheckPoint: version
+        CheckPoint:
+        1. IP
+        2. Login find version
+        Expect:
         * Login Success
         """
         _passwd = metadata["passwd"]
@@ -82,6 +92,9 @@ class TestGrp261x:
         page.get(_url_str)
         page.goto("/#signin:loggedOut")
         page.refresh()
+        page.refresh()
+        assert global_ip_addr['presentIpAddr'] in page.get_url
+
         try:
             page.custom_wait(12).until_not(lambda browser: page.popout_panel_glass)
         except BaseException:

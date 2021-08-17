@@ -25,6 +25,9 @@ def init_env(new_report):
     os.mkdir(new_report)
     os.mkdir(new_report + "/image")
 
+# Note: 2021-08-27
+#   TODO: Update to 'MAC' and 'URL' mode
+
 def run():
     logger.info("回归模式，开始执行！")
     now_time = time.strftime("%Y_%m_%d_%H_%M_%S")
@@ -39,7 +42,8 @@ def run():
     #                 '--metadata-from-json={"name": "admin", "passwd": "123", "base_url": "192.168.92.3"}',
     #                 "--junit-xml=" + xml_report,
     #                 "--self-contained-html"])
-    pytest.main(["-v", "-s", os.path.join( RunConfig.cases_path, suite_name ), '--metadata-from-json={"name": "admin", "passwd": "123", "base_url": "http://192.168.92.20/"}'])
+    pytest.main(["-v", "-s", os.path.join( RunConfig.cases_path, suite_name ), '--metadata-from-json={"name": "admin", "passwd": "123", "base_url": "http://192.168.92.20/"}', '--count=2'])
+    pytest.main(["-v", "-s", os.path.join( RunConfig.cases_path, suite_name ), '--metadata-from-json={"name": "admin", "passwd": "123", "mac": "c0:74:ad:28:b2:1a"}', '--count=2'])
     logger.info("运行结束，生成测试报告！")
 
 if __name__ == "__main__":
