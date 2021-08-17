@@ -1,9 +1,16 @@
 from wpoium import Page, Element, Elements
 
+from os.path import dirname, abspath, join
+import sys
+
+base_path = dirname(dirname(abspath(__file__)))
+sys.path.insert(0, base_path)
+page_path = join(base_path, 'page')
+wordlist = cvs_helper.load_custom_loc( join( page_path, 'grp261x_ele.csv') )
 
 class Grp261xCommonPage(Page):
-    ver_label = Element(
-        xpath="/html/body/div[2]/div/div/div[4]/div/div[2]/div", describe="Version Label")
+    ver_label = return_finds_elem("versionLabel")
+        # xpath="/html/body/div[2]/div/div/div[4]/div/div[2]/div", describe="Version Label")
     top_banner = Element(
         xpath='//*[@id="topBanner"]/div/div[1]/div', describe="Top Banner")
     navright_func_btns = Elements(
@@ -110,3 +117,12 @@ class Grp261xPageDirectory(Grp261xCommonPage):
 class Grp261xPageAccountGeneral(Grp261xCommonPage):
     vertical_menu_select = Element(
         xpath='//div[@class="verticalMenu level2 sel"]/div[@class="label"]')
+
+
+class Grp261xPageStatusNetworkStatus(Grp261xPageStatusAccount):
+
+class Grp261xPageStatusSystemInfo(Grp261xPageStatusAccount):
+
+class Grp261xPageStatusVPK(Grp261xPageStatusAccount):
+
+class Grp261xPageStatusSoftkey(Grp261xPageStatusAccount):

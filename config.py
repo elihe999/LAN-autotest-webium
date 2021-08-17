@@ -9,7 +9,7 @@ class RunConfig:
     cases_path = os.path.join(PRO_PATH, "testcases")
 
     # 配置浏览器驱动类型(chrome/firefox/chrome-headless/firefox-headless)。
-    driver_type = "chrome-headless"
+    driver_type = "chrome"
 
     # 失败重跑次数
     rerun = "1"

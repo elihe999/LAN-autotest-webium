@@ -49,47 +49,47 @@ class load_custom_loc():
             if item['name'] == name:
                 return item['context']
 
-    def return_find_elem(self, name=""):
+    def return_find_elem(self, name="", describe=""):
         tup_by_value = self.get_by_value(name)
         if tup_by_value == None:
             raise IndexError("Not matching keyword : " + name)
         if tup_by_value[0] == "id":
-            return Element(id_=tup_by_value[1])
+            return Element(id_=tup_by_value[1], describe=describe)
         if tup_by_value[0] == "name":
-            return Element(name=tup_by_value[1])
+            return Element(name=tup_by_value[1], describe=describe)
         if tup_by_value[0] == "classname":
-            return Element(classname=tup_by_value[1])
+            return Element(classname=tup_by_value[1], describe=describe)
         if tup_by_value[0] == "tagname":
-            return Element(tag=tup_by_value[1])
+            return Element(tag=tup_by_value[1], describe=describe)
         if tup_by_value[0] == "linktext":
-            return Element(class_name=tup_by_value[1])
+            return Element(class_name=tup_by_value[1], describe=describe)
         if tup_by_value[0] == "partiallink":
-            return Element(partial_link_text=tup_by_value[1])
+            return Element(partial_link_text=tup_by_value[1], describe=describe)
         if tup_by_value[0] == "xpath":
-            return Element(xpath=tup_by_value[1])
+            return Element(xpath=tup_by_value[1], describe=describe)
         if tup_by_value[0] == "cssselector":
-            return Element(css=tup_by_value[1])
+            return Element(css=tup_by_value[1], describe=describe)
 
-    def return_finds_elem(self, name=""):
+    def return_finds_elem(self, name="", describe=""):
         tup_by_value = self.get_by_value(name)
         if tup_by_value == None:
             raise IndexError("Not matching keyword : " + name)
         if tup_by_value[0] == "id":
-            return Elements(id_=tup_by_value[1])
+            return Elements(id_=tup_by_value[1], describe=describe)
         if tup_by_value[0] == "name":
-            return Elements(name=tup_by_value[1])
+            return Elements(name=tup_by_value[1], describe=describe)
         if tup_by_value[0] == "classname":
-            return Element(classname=tup_by_value[1])
+            return Element(classname=tup_by_value[1], describe=describe)
         if tup_by_value[0] == "tagname":
-            return Element(tag=tup_by_value[1])
+            return Element(tag=tup_by_value[1], describe=describe)
         if tup_by_value[0] == "linktext":
-            return Element(class_name=tup_by_value[1])
+            return Element(class_name=tup_by_value[1], describe=describe)
         if tup_by_value[0] == "partiallink":
-            return Element(partial_link_text=tup_by_value[1])
+            return Element(partial_link_text=tup_by_value[1], describe=describe)
         if tup_by_value[0] == "xpath":
-            return Element(xpath=tup_by_value[1])
+            return Element(xpath=tup_by_value[1], describe=describe)
         if tup_by_value[0] == "cssselector":
-            return Element(css=tup_by_value[1])
+            return Element(css=tup_by_value[1], describe=describe)
 
     def return_simple_string(self, name=""):
         answer_string = self.get_simple_result(name)

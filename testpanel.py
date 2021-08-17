@@ -11,40 +11,35 @@ import os
 import logging
 import pytest
 from conftest import REPORT_DIR
+from config import RunConfig
 
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# 配置浏览器驱动类型(chrome/firefox/chrome-headless/firefox-headless)
-driver_type = "chrome"
-
-# 浏览器驱动
-driver = './chromedriver.exe'
-
-# 报告路径
-NEW_REPORT = "output"
-
-logging.basicConfig(level=logging.INFO,
-                    format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-########
-#GLOBAL#
-########
-G_REPORT_NAME = "output"
-PRO_PATH = os.path.dirname(os.path.abspath(__file__))
-CASEPATH = os.path.join(PRO_PATH, "testcases")
-RunConfig_NEW_REPORT = ""
+
+def init_env(new_report):
+    """
+    初始化测试报告目录
+    """
+    os.mkdir(new_report)
+    os.mkdir(new_report + "/image")
 
 def run():
     logger.info("回归模式，开始执行！")
-    html_report = os.path.join(RunConfig_NEW_REPORT, "report.html")
-    xml_report = os.path.join(RunConfig_NEW_REPORT, "junit-xml.xml")
+    now_time = time.strftime("%Y_%m_%d_%H_%M_%S")
+    RunConfig.NEW_REPORT = os.path.join(REPORT_DIR, now_time)
+    init_env(RunConfig.NEW_REPORT)
+    html_report = os.path.join(RunConfig.NEW_REPORT, "report.html")
+    xml_report = os.path.join(RunConfig.NEW_REPORT, "junit-xml.xml")
     # suite_name = "test_Baidu.py::TestBaidu::test_Baidu_Main"
     suite_name = "test_GRP261x_Context.py::TestGrp261x"
-    pytest.main(["-s", "-v", os.path.join( CASEPATH, suite_name ),
-                    "--html=" + html_report,
-                    '--metadata-from-json={"name": "admin", "passwd": "123", "base_url": "192.168.92.3"}',
-                    "--junit-xml=" + xml_report,
-                    "--self-contained-html"])
+    # pytest.main(["-s", "-v", os.path.join( RunConfig.cases_path, suite_name ),
+    #                 "--html=" + html_report,
+    #                 '--metadata-from-json={"name": "admin", "passwd": "123", "base_url": "192.168.92.3"}',
+    #                 "--junit-xml=" + xml_report,
+    #                 "--self-contained-html"])
+    pytest.main(["-v", "-s", os.path.join( RunConfig.cases_path, suite_name ), '--metadata-from-json={"name": "admin", "passwd": "123", "base_url": "http://192.168.92.20/"}'])
     logger.info("运行结束，生成测试报告！")
 
 if __name__ == "__main__":

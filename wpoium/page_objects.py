@@ -62,11 +62,18 @@ class PageObject(object):
         """
         :param uri: URI to GET, based off of the root_uri attribute.
         """
+        self.driver.get(uri)
         root_uri = self.root_uri or ''
-        if len(root_uri) != 0:
-            self.driver.get(str(uri))
+        if len(root_uri) == 0:
+            self.root_uri = uri
+        self.driver.implicitly_wait(5)
+
+    def goto(self, route_uri):
+        root_uri = self.root_uri or ''
+        if len(root_uri) == 0:
+            raise ValueError("Please specify a base uri")
         else:
-            self.driver.get(str(root_uri) + str(uri))
+            self.driver.get(root_uri + route_uri)
         self.driver.implicitly_wait(5)
     
     def refresh(self):

@@ -66,7 +66,7 @@ class TestGrp261x:
         assert browser.title == "Grandstream | Executive IP Phone"
 
     @pytest.mark.run(order=2)
-    def test_device_login(self, browser, metadata):
+    def test_device_login_reboot(self, browser, metadata):
         """
         Name: Check Login
         Test Step:

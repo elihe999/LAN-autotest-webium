@@ -223,31 +223,5 @@ def browser_close():
     driver.quit()
     print("test end!")
 
-# def pytest_addoption(parser):
-#     parser.addoption("--name", action="store", default="None")
-#     parser.addoption("--base_url", action="store", default="None")
-#     parser.addoption("--passwd", action="store", default="None")
-
-# @pytest.fixture(scope="session", autouse=True)
-# def name(request):
-#     '''获取命令行参数'''
-#     # 获取命令行参数给到环境变量
-#     os.environ["name"] = request.config.getoption("--name")
-#     print("11:%s"%os.environ["name"])
-
-# @pytest.fixture(scope="session", autouse=True)
-# def base_url(request):
-#     '''获取命令行参数'''
-#     # 获取命令行参数给到环境变量
-#     os.environ["base_url"] = request.config.getoption("--base_url")
-#     print("11:%s"%os.environ["base_url"])
-
-# @pytest.fixture(scope="session", autouse=True)
-# def passwd(request):
-#     '''获取命令行参数'''
-#     # 获取命令行参数给到环境变量
-#     os.environ["passwd"] = request.config.getoption("--passwd")
-#     print("11:%s"%os.environ["passwd"])
-
 if __name__ == "__main__":
     capture_screenshots("test_dir/test_baidu_search.test_search_python.png")
