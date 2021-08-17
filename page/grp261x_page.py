@@ -10,18 +10,23 @@ page_path = join(base_path, 'page')
 wordlist = cvs_helper.load_custom_loc( join( page_path, 'grp261x_elem.csv') )
 
 class Grp261xCommonPage(Page):
-    ver_label = wordlist.return_finds_elem("versionLabel")
-        # xpath="/html/body/div[2]/div/div/div[4]/div/div[2]/div", describe="Version Label")
+    # single
     top_banner = Element(
         xpath='//*[@id="topBanner"]/div/div[1]/div', describe="Top Banner")
+    popout_panel = Element(
+        xpath='//div[@class="popupContent"]//div[@class="wrapper"]')
+    title = Element(xpath="//div/table/tbody/tr//div/h1", describe="table title")
+    reboot_btn = wordlist.return_find_elem("rebootButton")
+    popout_ok_btn = wordlist.return_find_elem("popoutConfirmOK")
+    popout_cancel_btn = wordlist.return_find_elem("popoutConfirmCancel")
+    # multiple
+    ver_label = wordlist.return_finds_elem("versionLabel")
+        # xpath="/html/body/div[2]/div/div/div[4]/div/div[2]/div", describe="Version Label")
+    
     navright_func_btns = Elements(
         xpath="/html/body/div[2]/div/div/div[3]/div[1]/div/div[2]/div[@class=\"feature\"]", describe="Function Button")
     config_button_div = Elements(
         xpath='//div[@class="row-config last"]/button', describe="Button row for save")
-    title = Element(xpath="//div/table/tbody/tr//div/h1",
-                    describe="table title")
-    popout_panel = Elements(
-        xpath='//div[@class="popupContent"]//div[@class="wrapper"]')
 
 class Grp261xLoginPage(Grp261xCommonPage):
     login_box = Element(id_="login-box", describe="Login Box")
@@ -69,7 +74,14 @@ class Grp261xPageNetwork(Grp261xCommonPage):
 class Grp261xPageMaintenance(Grp261xCommonPage):
     password_title = Elements(
         xpath="/html/body/div/div/div/div/div/table/tbody/tr/td/div/h3", describe="Title for user/admin")
+    tool_nav_level1_select = Element(
+        xpath='//*[@id="left-pad"]/div/div[2]/div[8]/div[1]', describe="Nav select tool")
+    upgrade_nav_level1_select = Element(
+        xpath='//*[@id="left-pad"]/div/div[2]/div[2]/div[1]', describe="Nav select tool")
+    tool_nav_level1_select = Element(
+        xpath='//*[@id="left-pad"]/div/div[2]/div[8]/div[1]', describe="Nav select tool")
 
+    start_btns = wordlist.return_finds_elem("toolStartbtns")
 
 class Grp261xPageDirectory(Grp261xCommonPage):
     contect_select = Element(

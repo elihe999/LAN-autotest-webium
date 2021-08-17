@@ -8,7 +8,7 @@ Copyright 2020, Raw-packet Project
 # endregion
 
 # region Import
-from webium.plugins.networking.Utils.base import Base
+from wpoium.plugins.networking.Utils.base import Base
 from random import choice, randint
 from struct import pack, unpack, error as struct_error
 from binascii import unhexlify, hexlify

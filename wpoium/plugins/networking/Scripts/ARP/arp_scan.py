@@ -11,9 +11,9 @@ Copyright 2020, Raw-packet Project
 # endregion
 
 # region Import
-from webium.plugins.networking.Utils.base import Base
-from webium.plugins.networking.Utils.utils import Utils
-from webium.plugins.networking.Scanners.arp_scanner import ArpScan
+from wpoium.plugins.networking.Utils.base import Base
+from wpoium.plugins.networking.Utils.utils import Utils
+from wpoium.plugins.networking.Scanners.arp_scanner import ArpScan
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 from prettytable import PrettyTable
 from typing import List, Dict, Union

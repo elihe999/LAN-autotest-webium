@@ -8,9 +8,9 @@ Copyright 2020, Raw-packet Project
 # endregion
 
 # region Import
-from webium.plugins.networking.Utils.network import RawARP, RawSniff, RawSend
-from webium.plugins.networking.Utils.tm import ThreadManager
-from webium.plugins.networking.Utils.base import Base
+from wpoium.plugins.networking.Utils.network import RawARP, RawSniff, RawSend
+from wpoium.plugins.networking.Utils.tm import ThreadManager
+from wpoium.plugins.networking.Utils.base import Base
 from socket import inet_aton
 from ipaddress import IPv4Address
 from sys import stdout

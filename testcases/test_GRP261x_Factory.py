@@ -1,5 +1,5 @@
 """
-@author:  Eli
+@author: Eli
 @data: 2021-06-10
 @function pytest 参数使用
 """
@@ -9,9 +9,11 @@ from time import sleep
 import pytest
 from os.path import dirname, abspath
 
+from wpoium.plugins.networking.Utils.base import Base
+
 base_path = dirname(dirname(abspath(__file__)))
 sys.path.insert(0, base_path)
-from page.grp261x_page import Grp261xLoginPage, Grp261xPageStatusAccount, Grp261xPageAccountGeneral, Grp261xPageSettings, Grp261xPageNetwork, Grp261xPageMaintenance, Grp261xPageDirectory
+from page.grp261x_page import Grp261xLoginPage, Grp261xPageStatusSystemInfo
 
 def get_data(file_path):
     """
@@ -25,6 +27,26 @@ def get_data(file_path):
         for i in dict_data:
             data.append(tuple(i.values()))
     return data
+
+
+def get_ip(mac_addr):
+    import time
+    from wpoium.plugins.networking.Scanners.arp_scanner import ArpScan
+    base: Base = Base(admin_only=True, available_platforms=['Linux', 'Darwin', 'Windows'])
+    current_network_interface = "本地连接"
+    arp_scan: ArpScan = ArpScan(network_interface=current_network_interface)
+    if mac_addr != "":
+        ip = arp_scan.get_ip_address(mac_addr,show_scan_percentage=True)
+        print("Find IP: ", ip)
+        return ip
+    else:
+        base.print_error("Can not find Device IP Address!!")
+        raise None
+        return None
+
+@pytest.fixture(scope = 'session')
+def global_mac_addr():
+    return {'presetMac': ''}
 
 """
 @name: web context test
@@ -45,59 +67,57 @@ class TestGrp261x:
 
     """Basic Test"""
     @pytest.mark.run(order=1)
-    def test_device_title(self, browser, metadata):
+    def test_device_title(self, browser, metadata, global_mac_addr):
         """
         Name: Check Web Title
         Test Step:
         1. Open Device IP
         2. Check Title on browser tab
         CheckPoint:
-        * Check Title for OEM
+        * Check Title
         """
         _passwd = metadata["passwd"]
-        _url_str = metadata["base_url"]
+        _mac = metadata["mac"]
         _name = metadata["name"]
-        page = Grp261xLoginPage(browser, url=_url_str)
+        # set mac addr        
+        global_mac_addr['presetMac'] = _mac
+        # get ip addr
+        ip_addr = get_ip(_mac)
+        http_ip_addr = "http://" + ip_addr
+        page = Grp261xLoginPage(browser, url=http_ip_addr)
         # test begin
-        page.get(_url_str)
-        sleep(2)
+        page.get(http_ip_addr)
+        page.custom_wait(2)
         print(browser.title)
+        if "Loading Web" in browser.title:
+            page.custom_wait(10)
         page.write_requests_log()
-        assert browser.title == "Grandstream | Executive IP Phone"
+        # assert browser.title == "Grandstream | Executive IP Phone"
 
-    @pytest.mark.run(order=2)
-    def test_device_login_reboot(self, browser, metadata):
-        """
-        Name: Check Login
-        Test Step:
-        1. Open Device IP
-        2. Entry username and password
-        CheckPoint: version
-        * Login Success
-        """
-        _passwd = metadata["passwd"]
-        _url_str = metadata["base_url"]
-        _name = metadata["name"]
-        page = Grp261xLoginPage(browser, url=_url_str)
-        page.get(_url_str)
         page.goto("/#signin:loggedOut")
         page.refresh()
+        page.refresh()
+        assert ip_addr in page.get_url
+        # Ignore glass panel
         try:
             page.custom_wait(12).until_not(lambda browser: page.popout_panel_glass)
         except BaseException:
             pass
-        sleep(1)
+        page.custom_wait(1)
         page.username_input = _name
         page.password_input = _passwd
-        sleep(1)
+        page.custom_wait(1)
         page.submit_button.click()
         page.set_window_size()
-        sleep(2)
+        page.custom_wait(2)
         page.write_requests_log()
-        authed_page = Grp261xPageStatusAccount(browser)
-        authed_page.write_requests_log()
-        sleep(2)
-        assert authed_page.ver_label
+        assert page.ver_label
+        page.reboot_btn.click()
+        page.custom_wait(5).until(lambda browser: page.popout_panel)
+        assert page.popout_panel
+        page.popout_ok_btn.click()
+        sleep(150)
+
 
 if __name__ == '__main__':
     pytest.main(["-v", "-s", "test_GRP261x_Context.py::TestGrp261x::test_device_login"])

@@ -1,6 +1,6 @@
 import os
 from nose.plugins import Plugin
-from webium.driver import close_driver
+from wpoium.driver import close_driver
 
 
 class WHEN_CLOSE(object):
@@ -15,12 +15,12 @@ class BrowserCloserPlugin(Plugin):
     def options(self, parser, env=None):
         env = env or os.environ
         parser.add_option('--whenclose', action='store',
-                          default=env.get('WEBIUM_WHEN_CLOSE', 'after_test'),
+                          default=env.get('wpoium_WHEN_CLOSE', 'after_test'),
                           dest='browser_closer_when',
                           metavar='STR',
                           help='When browser is closed (after_test, after_all). \
                                 Example: --whenclose after_all \
-                                Default: after_test or env variable [WEBIUM_WHEN_CLOSE]')
+                                Default: after_test or env variable [wpoium_WHEN_CLOSE]')
 
     def configure(self, options, conf):
         """Configure plugin. Plugin is enabled by default.

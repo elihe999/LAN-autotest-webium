@@ -8,7 +8,7 @@ Copyright 2020, Raw-packet Project
 # endregion
 
 # region Import
-from webium.plugins.networking.Utils.vendors import vendors_dictionary
+from wpoium.plugins.networking.Utils.vendors import vendors_dictionary
 try:
     from platform import system, release, linux_distribution
 except ImportError:

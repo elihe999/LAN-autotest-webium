@@ -8,9 +8,9 @@ Copyright 2020, Raw-packet Project
 # endregion
 
 # region Import
-from webium.plugins.networking.Utils.base import Base
-from webium.plugins.networking.Scanners.arp_scanner import ArpScan
-# from webium.plugins.networking.Scanners.icmpv6_scanner import ICMPv6Scan
+from wpoium.plugins.networking.Utils.base import Base
+from wpoium.plugins.networking.Scanners.arp_scanner import ArpScan
+# from wpoium.plugins.networking.Scanners.icmpv6_scanner import ICMPv6Scan
 from typing import List, Dict, Union
 from prettytable import PrettyTable
 from re import search, IGNORECASE

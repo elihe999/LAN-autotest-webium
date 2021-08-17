@@ -1,7 +1,7 @@
 """
 @author:  Eli
-@data: 2021-06-10
-@function pytest 参数使用
+@data: 2021-08-17
+@function pytest
 """
 import sys
 import json
@@ -13,7 +13,7 @@ base_path = dirname(dirname(abspath(__file__)))
 sys.path.insert(0, base_path)
 
 """
-@name: empty context test
+@name: OEM Test
 """
 class TestEmpty:
     """Test Case Setup"""
@@ -30,18 +30,8 @@ class TestEmpty:
         print('Pytest每个用例后置')
 
     """Basic Test"""
-    def test_firstOne(self, name, passwd, browser, base_url):
-        """
-        emtpy
-        """
-        print( name, passwd, browser, base_url )
-
-    def test_second(self, name, passwd, browser, base_url):
-        """
-        Name: Check Login
-        Second Test
-        """
-        print( name, passwd, browser, base_url )
+    def test_OEM(self):
+        
 
 if __name__ == '__main__':
     pytest.main(["-v", "-s", "test_Empty.py::TestEmpty::test_device_login"])

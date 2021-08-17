@@ -8,7 +8,7 @@ Copyright 2020, Raw-packet Project
 # endregion
 
 # region Import
-from webium.plugins.networking.Utils.base import Base
+from wpoium.plugins.networking.Utils.base import Base
 from collections import namedtuple
 from tempfile import gettempdir
 # endregion

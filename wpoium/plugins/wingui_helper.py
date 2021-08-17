@@ -1,6 +1,6 @@
 import win32gui, win32con
 import platform
-from webium.i18n import swtLang
+from wpoium.i18n import swtLang
 
 
 class Wingui_open_file():
