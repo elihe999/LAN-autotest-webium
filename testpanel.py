@@ -12,7 +12,6 @@ import logging
 import pytest
 from conftest import REPORT_DIR
 from config import RunConfig
-
 from wpoium import setupUi
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -54,7 +53,7 @@ if __name__ == "__main__":
     from PySide6.QtWidgets import QApplication
     
     app = QApplication()
-    mainUI = setupUi()
+    mainUI = setupUi(RunConfig)
     mainUI.main.show()
     app.exec_()
     
