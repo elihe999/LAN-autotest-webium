@@ -54,9 +54,8 @@ class Ui_MainWindow(object):
         self.viewFrame.setFrameShadow(QFrame.Raised)
         self.verticalLayout_2 = QVBoxLayout(self.viewFrame)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.testSuiteList = QListView(self.viewFrame)
+        self.testSuiteList = QListWidget(self.viewFrame)
         self.testSuiteList.setObjectName(u"testSuiteList")
-        self.testSuiteList.setTabKeyNavigation(True)
 
         self.verticalLayout_2.addWidget(self.testSuiteList)
 
@@ -178,30 +177,30 @@ class Ui_MainWindow(object):
 
         self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label_2)
 
-        self.lineEdit = QLineEdit(self.rebootOptionPage)
-        self.lineEdit.setObjectName(u"lineEdit")
+        self.ipLineEdit = QLineEdit(self.rebootOptionPage)
+        self.ipLineEdit.setObjectName(u"ipLineEdit")
 
-        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.lineEdit)
+        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.ipLineEdit)
 
         self.label_3 = QLabel(self.rebootOptionPage)
         self.label_3.setObjectName(u"label_3")
 
         self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_3)
 
-        self.lineEdit_2 = QLineEdit(self.rebootOptionPage)
-        self.lineEdit_2.setObjectName(u"lineEdit_2")
+        self.userNameLineEdit = QLineEdit(self.rebootOptionPage)
+        self.userNameLineEdit.setObjectName(u"userNameLineEdit")
 
-        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.lineEdit_2)
+        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.userNameLineEdit)
 
         self.label_4 = QLabel(self.rebootOptionPage)
         self.label_4.setObjectName(u"label_4")
 
         self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_4)
 
-        self.lineEdit_3 = QLineEdit(self.rebootOptionPage)
-        self.lineEdit_3.setObjectName(u"lineEdit_3")
+        self.passwdLineEdit = QLineEdit(self.rebootOptionPage)
+        self.passwdLineEdit.setObjectName(u"passwdLineEdit")
 
-        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.lineEdit_3)
+        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.passwdLineEdit)
 
         self.label_5 = QLabel(self.rebootOptionPage)
         self.label_5.setObjectName(u"label_5")
@@ -232,12 +231,12 @@ class Ui_MainWindow(object):
 
         self.formLayout.setWidget(4, QFormLayout.FieldRole, self.spinBoxLoop)
 
-        self.comboBox = QComboBox(self.rebootOptionPage)
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.setObjectName(u"comboBox")
+        self.uiComboBox = QComboBox(self.rebootOptionPage)
+        self.uiComboBox.addItem("")
+        self.uiComboBox.addItem("")
+        self.uiComboBox.setObjectName(u"uiComboBox")
 
-        self.formLayout.setWidget(5, QFormLayout.FieldRole, self.comboBox)
+        self.formLayout.setWidget(5, QFormLayout.FieldRole, self.uiComboBox)
 
         self.controlOptionStackedWidget.addWidget(self.rebootOptionPage)
 
@@ -302,8 +301,8 @@ class Ui_MainWindow(object):
         self.label_5.setText(QCoreApplication.translate("MainWindow", u"Time:", None))
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"Loop:", None))
         self.label_7.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.comboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"Classic UI", None))
-        self.comboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"Ant Design", None))
+        self.uiComboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"Classic UI", None))
+        self.uiComboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"Ant Design", None))
 
         self.menuMenu.setTitle(QCoreApplication.translate("MainWindow", u"Menu", None))
         self.menuOther.setTitle(QCoreApplication.translate("MainWindow", u"Other", None))

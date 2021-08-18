@@ -41,11 +41,7 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
-            <widget class="QListView" name="testSuiteList">
-             <property name="tabKeyNavigation">
-              <bool>true</bool>
-             </property>
-            </widget>
+            <widget class="QListWidget" name="testSuiteList"/>
            </item>
           </layout>
          </widget>
@@ -239,7 +235,7 @@ p, li { white-space: pre-wrap; }
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QLineEdit" name="lineEdit"/>
+            <widget class="QLineEdit" name="ipLineEdit"/>
            </item>
            <item row="1" column="0">
             <widget class="QLabel" name="label_3">
@@ -249,7 +245,7 @@ p, li { white-space: pre-wrap; }
             </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QLineEdit" name="lineEdit_2"/>
+            <widget class="QLineEdit" name="userNameLineEdit"/>
            </item>
            <item row="2" column="0">
             <widget class="QLabel" name="label_4">
@@ -259,7 +255,7 @@ p, li { white-space: pre-wrap; }
             </widget>
            </item>
            <item row="2" column="1">
-            <widget class="QLineEdit" name="lineEdit_3"/>
+            <widget class="QLineEdit" name="passwdLineEdit"/>
            </item>
            <item row="3" column="0">
             <widget class="QLabel" name="label_5">
@@ -303,7 +299,7 @@ p, li { white-space: pre-wrap; }
             </widget>
            </item>
            <item row="5" column="1">
-            <widget class="QComboBox" name="comboBox">
+            <widget class="QComboBox" name="uiComboBox">
              <item>
               <property name="text">
                <string>Classic UI</string>

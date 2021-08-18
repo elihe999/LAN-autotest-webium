@@ -6,10 +6,10 @@
 @function pytest UI
 """
 
-from PySide6.QtWidgets import QApplication, QMainWindow
+from PySide6.QtWidgets import QApplication, QMainWindow, QListWidgetItem
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtGui import QFontDatabase
-from PySide6.QtCore import QStringListModel
+from PySide6.QtCore import QEnum, QFlag, QObject, Qt
 #WARNING:root:qt_material must be imported after PySide or PyQt!
 from qt_material import QtStyleTools
 
@@ -26,24 +26,36 @@ class RuntimeStylesheets(QMainWindow, QtStyleTools):
         self.main.actionLight_Blue.triggered.connect(lambda: self.apply_stylesheet(self.main, 'light_blue.xml'))
         self.main.actionLight_Cyan.triggered.connect(lambda: self.apply_stylesheet(self.main, 'light_cyan.xml'))
         self.main.actionLight_Pink.triggered.connect(lambda: self.apply_stylesheet(self.main, 'light_pink.xml'))
+        self.main.testSuiteList.clicked.connect(self.checkParamVaild)
 
     def readSuiteFolder(self, suite_path):
         """
         Load test case on list view
         """
-        model = QStringListModel()
-        name_list = []
+        configd = False
         if os.path.exists(suite_path):
             files = os.listdir(suite_path)
             for file in files:
                 file_path = os.path.join(suite_path, file)
                 if os.path.isfile(file_path) and file.startswith('test'):
                     print(file)
-                    name_list.append(file)
-        # load model
-        model.setStringList(name_list)
-        self.main.testSuiteList.setWrapping(False)
-        self.main.testSuiteList.setModel(model)
+                    # test_  [  ]  .py
+                    item_name = file[5:-3]
+                    item = QListWidgetItem(item_name, self.main.testSuiteList)
+                    if not configd:
+                        self.main.testSuiteList.setCurrentItem(item)
+                        configd = True
+
+    def checkParamVaild(self):
+        """
+        Check input
+        """
+        selected_item_name = ""
+        selected_item_name = self.main.testSuiteList.selectedItems()[0].text()
+        self.changeSeletedCase( selected_item_name )
+
+    def changeSeletedCase(self, case_name):
+        print( case_name )
 
 def setupUi():
     # frame
