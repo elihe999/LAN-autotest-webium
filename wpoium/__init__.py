@@ -21,7 +21,9 @@ from .webdriver import Page
 from .page_objects import Element, Elements
 from .config import Browser
 from .javascript import CSSElement
+# Eli: Update ui
+from .ui.user_interface import setupUi
 
 __author__ = "fnngj"
 
-__version__ = "1.0.1"
+__version__ = "1.0.2"

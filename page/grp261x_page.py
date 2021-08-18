@@ -148,5 +148,3 @@ class Grp261xPageStatusVPK(Grp261xPageStatusAccount):
     vpk_account = Elements(xpath='//td[3]/div[@class="column column-accounts"]/div', describe="")
     vpk_descript = Elements(xpath='//td[4]/div[@class="column column-accounts"]/div', describe="")
     vpk_value = Elements(xpath='//td[5]/div[@class="column column-accounts"]/div', describe="")
-
-

@@ -41,7 +41,11 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
-            <widget class="QListView" name="listView"/>
+            <widget class="QListView" name="testSuiteList">
+             <property name="tabKeyNavigation">
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -280,6 +284,9 @@ p, li { white-space: pre-wrap; }
            </item>
            <item row="3" column="1">
             <widget class="QSpinBox" name="spinBoxTime">
+             <property name="minimum">
+              <number>1</number>
+             </property>
              <property name="maximum">
               <number>999</number>
              </property>
@@ -287,6 +294,9 @@ p, li { white-space: pre-wrap; }
            </item>
            <item row="4" column="1">
             <widget class="QSpinBox" name="spinBoxLoop">
+             <property name="minimum">
+              <number>1</number>
+             </property>
              <property name="maximum">
               <number>9999</number>
              </property>
@@ -339,6 +349,8 @@ p, li { white-space: pre-wrap; }
      </property>
      <addaction name="actionLight_Blue"/>
      <addaction name="actionDark_Blue"/>
+     <addaction name="actionLight_Cyan"/>
+     <addaction name="actionLight_Pink"/>
     </widget>
     <addaction name="actionAboutShow"/>
     <addaction name="separator"/>
@@ -371,6 +383,16 @@ p, li { white-space: pre-wrap; }
   <action name="actionLight_Blue">
    <property name="text">
     <string>Light-Blue</string>
+   </property>
+  </action>
+  <action name="actionLight_Cyan">
+   <property name="text">
+    <string>Light-Cyan</string>
+   </property>
+  </action>
+  <action name="actionLight_Pink">
+   <property name="text">
+    <string>Light-Pink</string>
    </property>
   </action>
  </widget>

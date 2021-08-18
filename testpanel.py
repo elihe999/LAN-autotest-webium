@@ -13,6 +13,8 @@ import pytest
 from conftest import REPORT_DIR
 from config import RunConfig
 
+from wpoium import setupUi
+
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 logger = logging.getLogger(__name__)
@@ -43,10 +45,16 @@ def run():
     #                 '--metadata-from-json={"name": "admin", "passwd": "123", "base_url": "192.168.92.3"}',
     #                 "--junit-xml=" + xml_report,
     #                 "--self-contained-html"])
-    pytest.main(["-v", "-s", os.path.join( RunConfig.cases_path, suite_name ), '--metadata-from-json={"name": "admin", "passwd": "123", "mac": "c0:74:ad:28:b2:1a"}', '--count=1', '--repeat-scope=session'])
+    pytest.main(["-v", "-s", os.path.join( RunConfig.cases_path, suite_name ), '--metadata-from-json={"name": "admin", "passwd": "123", "mac": "c0:74:ad:28:b2:1a"}', '--count=1', '--repeat-scope=session', "--self-contained-html", "--html=" + html_report, "--maxfail", RunConfig.max_fail])
     # pytest.main(["-v", "-s", os.path.join( RunConfig.cases_path, suite_name ), '--metadata-from-json={"name": "admin", "passwd": "123", "base_url": "http://192.168.92.20/"}', '--count=2', '--repeat-scope=session'])
     # pytest.main(["-v", "-s", os.path.join( RunConfig.cases_path, suite_name ), '--metadata-from-json={"name": "admin", "passwd": "123", "mac": "c0:74:ad:28:b2:1a"}', '--count=2','--repeat-scope=session'])
     logger.info("运行结束，生成测试报告！")
 
 if __name__ == "__main__":
-    run()
+    from PySide6.QtWidgets import QApplication
+    
+    app = QApplication()
+    mainUI = setupUi()
+    mainUI.main.show()
+    app.exec_()
+    

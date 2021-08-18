@@ -405,4 +405,4 @@ class Page(PageObject):
             info.append(entry)
         j = json.dumps(info, indent=4,ensure_ascii=False)
         with codecs.open('devtools.json', "w", "utf-8") as f:
-                f.write(j)
+            f.write(j)

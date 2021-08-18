@@ -118,6 +118,5 @@ class TestGrp261x:
         page.popout_ok_btn.click()
         sleep(150)
 
-
 if __name__ == '__main__':
     pytest.main(["-v", "-s", "test_GRP261x_Context.py::TestGrp261x::test_device_login"])
