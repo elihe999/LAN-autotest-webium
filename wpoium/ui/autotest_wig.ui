@@ -196,7 +196,7 @@ p, li { white-space: pre-wrap; }
        <item>
         <widget class="QStackedWidget" name="controlOptionStackedWidget">
          <property name="styleSheet">
-          <string notr="true">broder-bottom:none;</string>
+          <string notr="true">QStackedWidget:{border-bottom:none;}</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -280,7 +280,7 @@ p, li { white-space: pre-wrap; }
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">broder-top:none;</string>
+          <string notr="true">QFrame:{border-top:none;}</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>

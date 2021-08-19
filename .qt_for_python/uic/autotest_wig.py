@@ -161,6 +161,7 @@ class Ui_MainWindow(object):
 
         self.controlOptionStackedWidget = QStackedWidget(self.controlFrame)
         self.controlOptionStackedWidget.setObjectName(u"controlOptionStackedWidget")
+        self.controlOptionStackedWidget.setStyleSheet(u"QStackedWidget:{border-bottom:none;}")
         self.controlOptionStackedWidget.setFrameShape(QFrame.StyledPanel)
         self.controlOptionStackedWidget.setFrameShadow(QFrame.Raised)
         self.controlOptionStackedWidget.setLineWidth(3)
@@ -177,10 +178,10 @@ class Ui_MainWindow(object):
 
         self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label_2)
 
-        self.ipLineEdit = QLineEdit(self.rebootOptionPage)
-        self.ipLineEdit.setObjectName(u"ipLineEdit")
+        self.macLineEdit = QLineEdit(self.rebootOptionPage)
+        self.macLineEdit.setObjectName(u"macLineEdit")
 
-        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.ipLineEdit)
+        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.macLineEdit)
 
         self.label_3 = QLabel(self.rebootOptionPage)
         self.label_3.setObjectName(u"label_3")
@@ -202,45 +203,50 @@ class Ui_MainWindow(object):
 
         self.formLayout.setWidget(2, QFormLayout.FieldRole, self.passwdLineEdit)
 
-        self.label_5 = QLabel(self.rebootOptionPage)
-        self.label_5.setObjectName(u"label_5")
+        self.controlOptionStackedWidget.addWidget(self.rebootOptionPage)
+        self.provisionOptionPage = QWidget()
+        self.provisionOptionPage.setObjectName(u"provisionOptionPage")
+        self.controlOptionStackedWidget.addWidget(self.provisionOptionPage)
 
-        self.formLayout.setWidget(3, QFormLayout.LabelRole, self.label_5)
+        self.verticalLayout_3.addWidget(self.controlOptionStackedWidget)
 
-        self.label_6 = QLabel(self.rebootOptionPage)
-        self.label_6.setObjectName(u"label_6")
-
-        self.formLayout.setWidget(4, QFormLayout.LabelRole, self.label_6)
-
-        self.label_7 = QLabel(self.rebootOptionPage)
-        self.label_7.setObjectName(u"label_7")
-
-        self.formLayout.setWidget(5, QFormLayout.LabelRole, self.label_7)
-
-        self.spinBoxTime = QSpinBox(self.rebootOptionPage)
-        self.spinBoxTime.setObjectName(u"spinBoxTime")
-        self.spinBoxTime.setMinimum(1)
-        self.spinBoxTime.setMaximum(999)
-
-        self.formLayout.setWidget(3, QFormLayout.FieldRole, self.spinBoxTime)
-
-        self.spinBoxLoop = QSpinBox(self.rebootOptionPage)
+        self.FixOptionFrame = QFrame(self.controlFrame)
+        self.FixOptionFrame.setObjectName(u"FixOptionFrame")
+        sizePolicy1.setHeightForWidth(self.FixOptionFrame.sizePolicy().hasHeightForWidth())
+        self.FixOptionFrame.setSizePolicy(sizePolicy1)
+        self.FixOptionFrame.setMinimumSize(QSize(0, 60))
+        self.FixOptionFrame.setStyleSheet(u"QFrame:{border-top:none;}")
+        self.FixOptionFrame.setFrameShape(QFrame.StyledPanel)
+        self.FixOptionFrame.setFrameShadow(QFrame.Raised)
+        self.formLayout_2 = QFormLayout(self.FixOptionFrame)
+        self.formLayout_2.setObjectName(u"formLayout_2")
+        self.spinBoxLoop = QSpinBox(self.FixOptionFrame)
         self.spinBoxLoop.setObjectName(u"spinBoxLoop")
         self.spinBoxLoop.setMinimum(1)
         self.spinBoxLoop.setMaximum(9999)
 
-        self.formLayout.setWidget(4, QFormLayout.FieldRole, self.spinBoxLoop)
+        self.formLayout_2.setWidget(0, QFormLayout.FieldRole, self.spinBoxLoop)
 
-        self.uiComboBox = QComboBox(self.rebootOptionPage)
-        self.uiComboBox.addItem("")
-        self.uiComboBox.addItem("")
-        self.uiComboBox.setObjectName(u"uiComboBox")
+        self.labelLoop = QLabel(self.FixOptionFrame)
+        self.labelLoop.setObjectName(u"labelLoop")
+        self.labelLoop.setMinimumSize(QSize(60, 0))
 
-        self.formLayout.setWidget(5, QFormLayout.FieldRole, self.uiComboBox)
+        self.formLayout_2.setWidget(0, QFormLayout.LabelRole, self.labelLoop)
 
-        self.controlOptionStackedWidget.addWidget(self.rebootOptionPage)
+        self.labelTime = QLabel(self.FixOptionFrame)
+        self.labelTime.setObjectName(u"labelTime")
 
-        self.verticalLayout_3.addWidget(self.controlOptionStackedWidget)
+        self.formLayout_2.setWidget(1, QFormLayout.LabelRole, self.labelTime)
+
+        self.spinBoxTime = QSpinBox(self.FixOptionFrame)
+        self.spinBoxTime.setObjectName(u"spinBoxTime")
+        self.spinBoxTime.setMinimum(1)
+        self.spinBoxTime.setMaximum(999)
+
+        self.formLayout_2.setWidget(1, QFormLayout.FieldRole, self.spinBoxTime)
+
+
+        self.verticalLayout_3.addWidget(self.FixOptionFrame)
 
 
         self.horizontalLayout.addWidget(self.controlFrame)
@@ -295,15 +301,11 @@ class Ui_MainWindow(object):
 "</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Welcome</p></body></html>", None))
         self.statusLabel.setText(QCoreApplication.translate("MainWindow", u"Running", None))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Current IP:", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Mac:", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"User Name:", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"Password:", None))
-        self.label_5.setText(QCoreApplication.translate("MainWindow", u"Time:", None))
-        self.label_6.setText(QCoreApplication.translate("MainWindow", u"Loop:", None))
-        self.label_7.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.uiComboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"Classic UI", None))
-        self.uiComboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"Ant Design", None))
-
+        self.labelLoop.setText(QCoreApplication.translate("MainWindow", u"Loop:", None))
+        self.labelTime.setText(QCoreApplication.translate("MainWindow", u"Time:", None))
         self.menuMenu.setTitle(QCoreApplication.translate("MainWindow", u"Menu", None))
         self.menuOther.setTitle(QCoreApplication.translate("MainWindow", u"Other", None))
         self.menuUI.setTitle(QCoreApplication.translate("MainWindow", u"UI Change", None))
