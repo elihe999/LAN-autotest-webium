@@ -5,7 +5,7 @@
 @data: 2021-08-18
 @function pytest UI
 """
-
+import time
 from PySide6.QtWidgets import QApplication, QMainWindow, QListWidgetItem
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtGui import QFontDatabase
@@ -22,39 +22,35 @@ import os
 #     def dowork(self, sender, name, params):
 #         sender.emit(name, params)
 
+
 class ExecPyTestCase(QThread):
-    mySignal = Signal(str, str)
-    def __init__(self): 
+    updatesignal = Signal(str, str)
+
+    def __init__(self, config):
         QThread.__init__(self)
+        self.config = config
+        self.suite_name = ""
+        self.params = ""
+    # def __del__(self):
+    #     self.wait()
 
-    def __del__(self):
-        self.wait()
+    def setConfig(self, case_name, params):
+        self.suite_name = case_name
+        self.params = params
 
-    # custom method
-    def init_env(self, new_report):
-        """
-        初始化测试报告目录
-        """
-        os.mkdir(new_report)
-        os.mkdir(new_report + "/image")
+    def run(self):
+        print("Start")
+        pytest.main(["-v", "-s", os.path.join(self.config.cases_path, suite_name), '--metadata-from-json='+self.params,
+                     '--count=1', '--repeat-scope=session', "--self-contained-html", "--html=" + self.config.html_report, "--maxfail", self.config.max_fail])
 
-    @Slot(str, str)
-    def run(self, case_name, params):
-        now_time = time.strftime("%Y_%m_%d_%H_%M_%S")
-        RunConfig.NEW_REPORT = os.path.join(REPORT_DIR, now_time)
-        self.init_env(RunConfig.NEW_REPORT)
-        html_report = os.path.join(RunConfig.NEW_REPORT, "report.html")
-        xml_report = os.path.join(RunConfig.NEW_REPORT, "junit-xml.xml")
-        suite_name = case_name
-        pytest.main(["-v", "-s", os.path.join( RunConfig.cases_path, suite_name ), '--metadata-from-json={"name": "admin", "passwd": "123", "mac": "c0:74:ad:28:b2:1a"}', '--count=1', '--repeat-scope=session', "--self-contained-html", "--html=" + html_report, "--maxfail", RunConfig.max_fail])
-        # self.mySignal.emit("test", "test")
 
 class RuntimeStylesheets(QMainWindow, QtStyleTools):
     # ----------------------------------------------------------------------
     sendsignal = Signal(str, str)
+    signalRun = Signal(ExecPyTestCase)
     def __init__(self):
         """"""
-        super().__init__(self)
+        super().__init__()
         self.main = QUiLoader().load('wpoium/ui/autotest_wig.ui', self)
         self.apply_stylesheet(self.main, 'light_blue.xml')
         self.main.actionDark_Blue.triggered.connect(
@@ -72,12 +68,14 @@ class RuntimeStylesheets(QMainWindow, QtStyleTools):
         # ============================================
         self.suite_name = ""
         self.config = None
-        #=============================================
+        # =============================================
+        self.getExecThread = None
+        self.thread = QThread()
         # self.thread = QThread()
         # self.worker = Worker()
         # self.worker.moveToThread(self.thread)
         # END INIT
-                
+
     def readSuiteFolder(self, suite_path):
         """
         Load test case on list view
@@ -105,6 +103,14 @@ class RuntimeStylesheets(QMainWindow, QtStyleTools):
 
     def checkParamVaild(self):
         if self.suite_name != "":
+            print("OK")
+            self.getExecThread = ExecPyTestCase(self.config)
+            self.getExecThread.moveToThread(self.thread)
+            self.signalRun.connect(self.getExecThread.setConfig)
+            self.getExecThread.updatesignal.connect(self.showResult)
+            self.getExecThread.setConfig(self.suite_name,
+                                '{"name": "admin", "passwd": "123", "mac": "c0:74:ad:28:b2:1a"}')
+            self.thread.start()
             # self.worker.dowork( self.sendsignal,
             #                     self.suite_name,
             #                     '{"name": "admin", "passwd": "123", "mac": "c0:74:ad:28:b2:1a"}')
@@ -112,11 +118,11 @@ class RuntimeStylesheets(QMainWindow, QtStyleTools):
 
     def changeSeletedCase(self, case_name):
         self.suite_name = "test_"+case_name+".py"
-        print( self.suite_name )
 
     @Slot(str, str)
     def showResult(self, casename, params):
         print(casename, params)
+
 
 def setupUi(config):
     # frame
