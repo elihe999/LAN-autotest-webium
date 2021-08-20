@@ -15,39 +15,11 @@ from qt_material import QtStyleTools
 import pytest
 import os
 
-# class Worker(QObject):
-#     def __init__(self):
-#         QObject.__init__(self)
-
-#     def dowork(self, sender, name, params):
-#         sender.emit(name, params)
-
-
-class ExecPyTestCase(QThread):
-    updatesignal = Signal(str, str)
-
-    def __init__(self, config):
-        QThread.__init__(self)
-        self.config = config
-        self.suite_name = ""
-        self.params = ""
-    # def __del__(self):
-    #     self.wait()
-
-    def setConfig(self, case_name, params):
-        self.suite_name = case_name
-        self.params = params
-
-    def run(self):
-        print("Start")
-        pytest.main(["-v", "-s", os.path.join(self.config.cases_path, suite_name), '--metadata-from-json='+self.params,
-                     '--count=1', '--repeat-scope=session', "--self-contained-html", "--html=" + self.config.html_report, "--maxfail", self.config.max_fail])
-
+from wpoium.ui.worker import BackgroundWorker
 
 class RuntimeStylesheets(QMainWindow, QtStyleTools):
     # ----------------------------------------------------------------------
     sendsignal = Signal(str, str)
-    signalRun = Signal(ExecPyTestCase)
     def __init__(self):
         """"""
         super().__init__()
@@ -104,17 +76,11 @@ class RuntimeStylesheets(QMainWindow, QtStyleTools):
     def checkParamVaild(self):
         if self.suite_name != "":
             print("OK")
-            self.getExecThread = ExecPyTestCase(self.config)
-            self.getExecThread.moveToThread(self.thread)
-            self.signalRun.connect(self.getExecThread.setConfig)
-            self.getExecThread.updatesignal.connect(self.showResult)
-            self.getExecThread.setConfig(self.suite_name,
-                                '{"name": "admin", "passwd": "123", "mac": "c0:74:ad:28:b2:1a"}')
-            self.thread.start()
-            # self.worker.dowork( self.sendsignal,
-            #                     self.suite_name,
-            #                     '{"name": "admin", "passwd": "123", "mac": "c0:74:ad:28:b2:1a"}')
-            # self.sendsignal.emit(self.suite_name, '{"name": "admin", "passwd": "123", "mac": "c0:74:ad:28:b2:1a"}')
+
+            self.background_worker_thread_ = QThread()
+            self.background_worker_ = BackgroundWorker()
+            self.background_worker_.moveToThread(self.background_worker_thread_)
+            self.pushButtonStart.connect(self.background_worker_.run)
 
     def changeSeletedCase(self, case_name):
         self.suite_name = "test_"+case_name+".py"
