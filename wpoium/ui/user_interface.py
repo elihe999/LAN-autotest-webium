@@ -24,6 +24,16 @@ class RuntimeStylesheets(QMainWindow, QtStyleTools):
         """"""
         super().__init__()
         self.main = QUiLoader().load('wpoium/ui/autotest_wig.ui', self)
+        self.main.testSuiteList.clicked.connect(self.changeItem)
+        self.main.pushButtonStart.clicked.connect(self.checkParamVaild)
+
+        self.background_worker_thread_ = QThread()
+        self.background_worker_ = BackgroundWorker()
+        self.background_worker_.moveToThread(self.background_worker_thread_)
+        self.sendsignal.connect(self.background_worker_.run)
+        self.background_worker_.report_progress.connect(self.showResult)
+
+        ################################################################
         self.apply_stylesheet(self.main, 'light_blue.xml')
         self.main.actionDark_Blue.triggered.connect(
             lambda: self.apply_stylesheet(self.main, 'dark_teal.xml'))
@@ -33,8 +43,7 @@ class RuntimeStylesheets(QMainWindow, QtStyleTools):
             lambda: self.apply_stylesheet(self.main, 'light_cyan.xml'))
         self.main.actionLight_Pink.triggered.connect(
             lambda: self.apply_stylesheet(self.main, 'light_pink.xml'))
-        self.main.testSuiteList.clicked.connect(self.changeItem)
-        self.main.pushButtonStart.clicked.connect(self.checkParamVaild)
+
         # ============================================
         # variable
         # ============================================
@@ -75,19 +84,17 @@ class RuntimeStylesheets(QMainWindow, QtStyleTools):
 
     def checkParamVaild(self):
         if self.suite_name != "":
+            if not self.background_worker_thread_.isRunning():
+                self.background_worker_thread_.start()
             print("OK")
-
-            self.background_worker_thread_ = QThread()
-            self.background_worker_ = BackgroundWorker()
-            self.background_worker_.moveToThread(self.background_worker_thread_)
-            self.pushButtonStart.connect(self.background_worker_.run)
+            self.sendsignal.emit("test", "test2")
 
     def changeSeletedCase(self, case_name):
         self.suite_name = "test_"+case_name+".py"
 
-    @Slot(str, str)
-    def showResult(self, casename, params):
-        print(casename, params)
+    @Slot()
+    def showResult(self, test):
+        print(test)
 
 
 def setupUi(config):
