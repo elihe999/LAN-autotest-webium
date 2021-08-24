@@ -103,46 +103,11 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QTextBrowser" name="textBrowser">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
+         <property name="minimumSize">
           <size>
-           <width>16777215</width>
-           <height>22</height>
+           <width>0</width>
+           <height>220</height>
           </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">margin:0px;</string>
-         </property>
-         <property name="verticalScrollBarPolicy">
-          <enum>Qt::ScrollBarAlwaysOff</enum>
-         </property>
-         <property name="horizontalScrollBarPolicy">
-          <enum>Qt::ScrollBarAlwaysOff</enum>
-         </property>
-         <property name="sizeAdjustPolicy">
-          <enum>QAbstractScrollArea::AdjustToContents</enum>
-         </property>
-         <property name="tabChangesFocus">
-          <bool>false</bool>
-         </property>
-         <property name="html">
-          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Welcome&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="acceptRichText">
-          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -176,7 +141,7 @@ p, li { white-space: pre-wrap; }
              </sizepolicy>
             </property>
             <property name="text">
-             <string>Running</string>
+             <string>Stopped</string>
             </property>
            </widget>
           </item>
@@ -189,7 +154,10 @@ p, li { white-space: pre-wrap; }
              </sizepolicy>
             </property>
             <property name="value">
-             <number>24</number>
+             <number>0</number>
+            </property>
+            <property name="format">
+             <string>%p</string>
             </property>
            </widget>
           </item>
@@ -366,6 +334,11 @@ p, li { white-space: pre-wrap; }
      <addaction name="actionDark_Blue"/>
      <addaction name="actionLight_Cyan"/>
      <addaction name="actionLight_Pink"/>
+     <addaction name="actionDark_Amber"/>
+     <addaction name="actionDark_Cyan"/>
+     <addaction name="actionDark_LightGreen"/>
+     <addaction name="actionDark_Purple"/>
+     <addaction name="actionDark_Yellow"/>
     </widget>
     <addaction name="actionAboutShow"/>
     <addaction name="separator"/>
@@ -408,6 +381,31 @@ p, li { white-space: pre-wrap; }
   <action name="actionLight_Pink">
    <property name="text">
     <string>Light-Pink</string>
+   </property>
+  </action>
+  <action name="actionDark_Amber">
+   <property name="text">
+    <string>Dark-Amber</string>
+   </property>
+  </action>
+  <action name="actionDark_Cyan">
+   <property name="text">
+    <string>Dark-Cyan</string>
+   </property>
+  </action>
+  <action name="actionDark_LightGreen">
+   <property name="text">
+    <string>Dark-LightGreen</string>
+   </property>
+  </action>
+  <action name="actionDark_Purple">
+   <property name="text">
+    <string>Dark-Purple</string>
+   </property>
+  </action>
+  <action name="actionDark_Yellow">
+   <property name="text">
+    <string>Dark-Yellow</string>
    </property>
   </action>
  </widget>

@@ -37,6 +37,16 @@ class Ui_MainWindow(object):
         self.actionLight_Cyan.setObjectName(u"actionLight_Cyan")
         self.actionLight_Pink = QAction(MainWindow)
         self.actionLight_Pink.setObjectName(u"actionLight_Pink")
+        self.actionDark_Amber = QAction(MainWindow)
+        self.actionDark_Amber.setObjectName(u"actionDark_Amber")
+        self.actionDark_Cyan = QAction(MainWindow)
+        self.actionDark_Cyan.setObjectName(u"actionDark_Cyan")
+        self.actionDark_LightGreen = QAction(MainWindow)
+        self.actionDark_LightGreen.setObjectName(u"actionDark_LightGreen")
+        self.actionDark_Purple = QAction(MainWindow)
+        self.actionDark_Purple.setObjectName(u"actionDark_Purple")
+        self.actionDark_Yellow = QAction(MainWindow)
+        self.actionDark_Yellow.setObjectName(u"actionDark_Yellow")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -107,22 +117,9 @@ class Ui_MainWindow(object):
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.logBrowser.sizePolicy().hasHeightForWidth())
         self.logBrowser.setSizePolicy(sizePolicy2)
+        self.logBrowser.setMinimumSize(QSize(0, 220))
 
         self.verticalLayout_3.addWidget(self.logBrowser)
-
-        self.textBrowser = QTextBrowser(self.controlFrame)
-        self.textBrowser.setObjectName(u"textBrowser")
-        sizePolicy2.setHeightForWidth(self.textBrowser.sizePolicy().hasHeightForWidth())
-        self.textBrowser.setSizePolicy(sizePolicy2)
-        self.textBrowser.setMaximumSize(QSize(16777215, 22))
-        self.textBrowser.setStyleSheet(u"margin:0px;")
-        self.textBrowser.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.textBrowser.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.textBrowser.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
-        self.textBrowser.setTabChangesFocus(False)
-        self.textBrowser.setAcceptRichText(False)
-
-        self.verticalLayout_3.addWidget(self.textBrowser)
 
         self.processFrame = QFrame(self.controlFrame)
         self.processFrame.setObjectName(u"processFrame")
@@ -153,7 +150,7 @@ class Ui_MainWindow(object):
         sizePolicy5.setVerticalStretch(0)
         sizePolicy5.setHeightForWidth(self.progressBar.sizePolicy().hasHeightForWidth())
         self.progressBar.setSizePolicy(sizePolicy5)
-        self.progressBar.setValue(24)
+        self.progressBar.setValue(0)
 
         self.horizontalLayout_3.addWidget(self.progressBar)
 
@@ -276,6 +273,11 @@ class Ui_MainWindow(object):
         self.menuUI.addAction(self.actionDark_Blue)
         self.menuUI.addAction(self.actionLight_Cyan)
         self.menuUI.addAction(self.actionLight_Pink)
+        self.menuUI.addAction(self.actionDark_Amber)
+        self.menuUI.addAction(self.actionDark_Cyan)
+        self.menuUI.addAction(self.actionDark_LightGreen)
+        self.menuUI.addAction(self.actionDark_Purple)
+        self.menuUI.addAction(self.actionDark_Yellow)
 
         self.retranslateUi(MainWindow)
 
@@ -294,14 +296,15 @@ class Ui_MainWindow(object):
         self.actionLight_Blue.setText(QCoreApplication.translate("MainWindow", u"Light-Blue", None))
         self.actionLight_Cyan.setText(QCoreApplication.translate("MainWindow", u"Light-Cyan", None))
         self.actionLight_Pink.setText(QCoreApplication.translate("MainWindow", u"Light-Pink", None))
+        self.actionDark_Amber.setText(QCoreApplication.translate("MainWindow", u"Dark-Amber", None))
+        self.actionDark_Cyan.setText(QCoreApplication.translate("MainWindow", u"Dark-Cyan", None))
+        self.actionDark_LightGreen.setText(QCoreApplication.translate("MainWindow", u"Dark-LightGreen", None))
+        self.actionDark_Purple.setText(QCoreApplication.translate("MainWindow", u"Dark-Purple", None))
+        self.actionDark_Yellow.setText(QCoreApplication.translate("MainWindow", u"Dark-Yellow", None))
         self.pushButtonStart.setText(QCoreApplication.translate("MainWindow", u"Start", None))
         self.pushButtonStop.setText(QCoreApplication.translate("MainWindow", u"Stop", None))
-        self.textBrowser.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Welcome</p></body></html>", None))
-        self.statusLabel.setText(QCoreApplication.translate("MainWindow", u"Running", None))
+        self.statusLabel.setText(QCoreApplication.translate("MainWindow", u"Stopped", None))
+        self.progressBar.setFormat(QCoreApplication.translate("MainWindow", u"%p", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"Mac:", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"User Name:", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"Password:", None))

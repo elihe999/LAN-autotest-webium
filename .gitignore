@@ -132,3 +132,4 @@ dmypy.json
 output/*
 autoIt_script/*.exe
 devtools.json
+cache
