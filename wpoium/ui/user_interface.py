@@ -61,7 +61,6 @@ class RuntimeStylesheets(QMainWindow, QtStyleTools):
             lambda: self.changeStyle('dark_purple.xml'))
         self.main.actionDark_Yellow.triggered.connect(
             lambda: self.changeStyle('dark_yellow.xml'))
-
         self.style_list = ['dark_amber.xml',
                             'dark_blue.xml',
                             'dark_cyan.xml',
