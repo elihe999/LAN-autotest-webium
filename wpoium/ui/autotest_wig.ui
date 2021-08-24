@@ -119,6 +119,9 @@
            <height>22</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">margin:0px;</string>
+         </property>
          <property name="verticalScrollBarPolicy">
           <enum>Qt::ScrollBarAlwaysOff</enum>
          </property>

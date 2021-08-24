@@ -115,6 +115,7 @@ class Ui_MainWindow(object):
         sizePolicy2.setHeightForWidth(self.textBrowser.sizePolicy().hasHeightForWidth())
         self.textBrowser.setSizePolicy(sizePolicy2)
         self.textBrowser.setMaximumSize(QSize(16777215, 22))
+        self.textBrowser.setStyleSheet(u"margin:0px;")
         self.textBrowser.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.textBrowser.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.textBrowser.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
