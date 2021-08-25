@@ -25,7 +25,7 @@ class BackgroundWorker(QObject):
                   "/" + str(self.total_loop) + "\t.")
             self.report_progress.emit(self.current_loop, 1, 0)
             pytest.main(["-v", "-s", name,
-                         '--metadata-from-json='+meta, '--count=1', '--repeat-scope=session', "--self-contained-html", "--html=" + html, "--maxfail", "3"])
+                         '--metadata-from-json='+meta, '--repeat-scope=session', "--self-contained-html", "--html=" + html])
             self.ticker(delay)
             self.current_loop = self.current_loop + 1
         self.finished.emit(self.current_loop)
