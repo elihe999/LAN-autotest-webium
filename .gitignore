@@ -133,3 +133,6 @@ output/*
 autoIt_script/*.exe
 devtools.json
 cache
+
+node_modules/*
+
