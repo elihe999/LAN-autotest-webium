@@ -10,6 +10,11 @@ from conftest import REPORT_DIR
 from config import RunConfig
 from wpoium import setupUi
 
+import PySide6
+dirname = os.path.dirname(PySide6.__file__)
+plugin_path = os.path.join(dirname, 'plugins', 'platforms')
+os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = plugin_path
+
 from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import QObject, Signal, Slot, QThread
 
