@@ -1,0 +1,11 @@
+selenium==3.141.0
+pytest==6.1.2
+pytest-html==3.0.0
+pytest-rerunfailures==9.1.1
+pytest-ordering===3.1.0
+click==7.1.2
+pytest-metadata==3.1.0
+func_timeout==4.3.5
+Appium-Python-Client==1.2.0
+pyside6==6.1.2
+qt_material==2.8.8

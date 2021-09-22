@@ -1,0 +1,5 @@
+versionLabel,xpath,/html/body/div[2]/div/div/div[4]/div/div[2]/div
+toolStartbtns,xpath,//div[@class="cell contents"]/button
+rebootButton,xpath,/html/body/div[2]/div/div/div[3]/div[1]/div/div[2]/div[@class="feature"]/a[@class="feature last"]
+popoutConfirmOK,xpath,//div[@class="popupContent"]//div/button[@class="button green"]
+popoutConfirmCancel,xpath,//div[@class="popupContent"]//div/button[@class="button red"]
