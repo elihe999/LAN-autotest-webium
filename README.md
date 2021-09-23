@@ -6,7 +6,6 @@ Also FORK from Poium [SeldomQA/poium](https://github.com/SeldomQA/wpoium).
 
 Networking part is FORK from Raw-socket.
 
-
 pip install browsermob-proxy
 
 ## Todo
@@ -17,16 +16,22 @@ pip install browsermob-proxy
 - Performing
 - File Upload / Download
 - Error catching
+
 ## Configuration
-### preset string
+
+- Preset keyword string
+- PO
+
+### preset keyword string
 
 ```python
 wordlist = cvs_helper.load_custom_loc('preset_elm/my_baidu_example.csv')
 ```
 TODO: 多种后缀
 
-## Page Object (PO)
+### Page Object (PO)
 
+Using the pytest test suite to run the test case. You can write multiple test cases on one test suite. Todo: Avaliable Module.
 
 ## pytest
 
