@@ -5,13 +5,13 @@ from selenium import webdriver
 from selenium.webdriver import Remote
 from selenium.webdriver.chrome.options import Options as CH_Options
 from selenium.webdriver.firefox.options import Options as FF_Options
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from config import RunConfig
-from browsermobproxy import Server
 
 # 项目目录配置
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 REPORT_DIR = BASE_DIR + "/output/"
-
+proxy = None
 
 # 定义基本测试环境
 @pytest.fixture(scope='function')
@@ -69,6 +69,12 @@ def pytest_runtest_makereport(item):
                        'onclick="window.open(this.src)" align="right"/></div>' % img_path
                 extra.append(pytest_html.extras.html(html))
         report.extra = extra
+    # import json
+    # global proxy
+    # proxy.wait_for_traffic_to_stop(1, 60)
+    # # 保存har中的信息到本地
+    # with open('1.har', 'w',encoding='utf-8') as outfile:
+    #     json.dump(proxy.har, outfile,indent=2,ensure_ascii=False)
 
 
 def description_html(desc):
@@ -124,6 +130,7 @@ def browser():
     :return:
     """
     global driver
+    global proxy
 
     if RunConfig.driver_type == "chrome":
         # 本地chrome浏览器
@@ -143,6 +150,7 @@ def browser():
 
         if hasattr(RunConfig, "browsermob_proxy"):
             # browsermobproxy
+            from browsermobproxy import Server
             opt_dict={'port':8888}
             if hasattr(RunConfig, "browsermob_proxy"):
                 opt_dict={'port':RunConfig.browsermob_proxy_port}
@@ -169,7 +177,6 @@ def browser():
             service_args.append('--load-images=yes')
         else:
             service_args.append('--load-images=no')
-        
         if hasattr(RunConfig, "service_disk_cache"):
             service_args.append('--disk-cache=yes')
         else:
@@ -178,8 +185,14 @@ def browser():
             service_args.append('--ignore-ssl-errors=true')
         else:
             service_args.append('--ignore-ssl-errors=false')
+        # 必须有这一句，才能在后面获取到performance
 
-        driver = webdriver.Chrome(options=chrome_options, service_args=service_args)
+        chrome_options.add_experimental_option('w3c', False)
+        caps = DesiredCapabilities.CHROME
+        caps['loggingPrefs'] = {'performance': 'ALL'}
+        # caps['goog:loggingPrefs'] = {'browswer': 'ALL'}
+        driver = webdriver.Chrome(options=chrome_options, service_args=service_args, desired_capabilities=caps)
+        # proxy.new_har("test", options={'captureContent': True, 'captureHeaders': True})     # 开启代理监控，如果不监控会拿不到请求内容
 
     elif RunConfig.driver_type == "firefox-headless":
         # firefox headless模式

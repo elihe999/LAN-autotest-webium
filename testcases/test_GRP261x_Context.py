@@ -11,7 +11,7 @@ from os.path import dirname, abspath
 
 base_path = dirname(dirname(abspath(__file__)))
 sys.path.insert(0, base_path)
-from page.grp261x_page import Grp261xLoginPage, Grp261xPageStatusAccount, Grp261xPageAccountGeneral
+from page.grp261x_page import Grp261xLoginPage, Grp261xPageStatusAccount, Grp261xPageAccountGeneral, Grp261xPageSettings, Grp261xPageNetwork, Grp261xPageMaintenance, Grp261xPageDirectory
 
 def get_data(file_path):
     """
@@ -62,6 +62,7 @@ class TestGrp261x:
         page.get(str(base_url)+"/#signin:loggedOut")
         sleep(2)
         print(browser.title)
+        page.write_requests_log()
         assert browser.title == "Grandstream | Executive IP Phone"
 
     @pytest.mark.run(order=2)
@@ -91,7 +92,9 @@ class TestGrp261x:
         page.submit_button.click()
         page.set_window_size()
         sleep(2)
+        page.write_requests_log()
         authed_page = Grp261xPageStatusAccount(browser)
+        authed_page.write_requests_log()
         sleep(2)
         assert authed_page.ver_label
 
@@ -129,7 +132,7 @@ class TestGrp261x:
         CheckPoint: check Account number
         """
         page = Grp261xLoginPage(browser)
-        page.get(base_url)
+        page.get(str(base_url)+"/#page:status_account")
         try:
             assert page.login_box
             page.custom_wait(12).until_not(lambda browser: page.popout_panel_glass)
@@ -149,11 +152,15 @@ class TestGrp261x:
         authed_page = Grp261xPageStatusAccount(browser)
         sleep(2)
         account_num = len(authed_page.account_status)
+        font = authed_page.account1_sub_title.value_of_css_property("font-family")
+        submenu_nav = authed_page.vertical_menu_select.text
+        print(submenu_nav)
         sleep(2)
         print("\t---\tcheck account amount\t---\t")
         assert account_num < 7
         assert authed_page.vertical_menu_select.is_displayed() == True
-        assert authed_page.vertical_menu_select.get_attribute("innerHTML") == "Account Status"
+        assert font == "\"Open Sans\", sans-serif"
+        assert submenu_nav == "Account Status"
 
     @pytest.mark.parametrize(
         "name, passwd, base_url",
@@ -166,10 +173,10 @@ class TestGrp261x:
         1. Open Device IP
         2. Login
         3. Check account general page on web browser
-        CheckPoint: Check Account Index
+        CheckPoint: Check Account Index and font-family
         """
         page = Grp261xLoginPage(browser)
-        page.get(base_url)
+        page.get(str(base_url)+"/#page:account_1_general")
         try:
             assert page.login_box
             page.custom_wait(12).until_not(lambda browser: page.popout_panel_glass)
@@ -196,6 +203,97 @@ class TestGrp261x:
         # assert authed_page.vertical_menu_select.is_displayed() == True
         # assert authed_page.vertical_menu_select.get_attribute("innerHTML") == "Account Status"
 
+    @pytest.mark.parametrize(
+        "name, passwd, base_url",
+        get_data(base_path + "/testcases/data/data_file.json")
+    )
+    def test_device_network_basic(self, name, passwd, browser, base_url):
+        """
+        Name: Check Network page
+        Test Step:
+        1. Open Device IP
+        2. Login
+        3. Check network basic page on web browser
+        CheckPoint: Basic Settings
+        """
+        page = Grp261xLoginPage(browser)
+        page.get(str(base_url)+"/#page:network_basic")
+        try:
+            assert page.login_box
+            page.custom_wait(12).until_not(lambda browser: page.popout_panel_glass)
+            page.username_input = name
+            page.password_input = passwd
+            sleep(1)
+            page.submit_button.click()
+        except BaseException:
+            pass
+
+        authed_page = Grp261xPageAccountGeneral(browser)
+
+    @pytest.mark.parametrize(
+        "name, passwd, base_url",
+        get_data(base_path + "/testcases/data/data_file.json")
+    )
+    def test_device_maintenance_basic(self, name, passwd, browser, base_url):
+        """
+        Name: Check Maintenance page
+        Test Step:
+        1. Open Device IP
+        2. Login
+        3. Check Maintenance basic page on web browser
+        CheckPoint: Maintenance
+        """
+        page = Grp261xLoginPage(browser)
+        try:
+            assert page.login_box
+            page.custom_wait(12).until_not(lambda browser: page.popout_panel_glass)
+            page.username_input = name
+            page.password_input = passwd
+            sleep(1)
+            page.submit_button.click()
+            sleep(1)
+        except BaseException:
+            pass
+        page.get(str(base_url)+"/#page:maintenance_web_access")
+
+        authed_page = Grp261xPageMaintenance(browser)
+        password_elements = authed_page.password_title
+        num_password_title = len(password_elements)
+        title_contexts = True
+        for title in password_elements:
+            print(title.text)
+            if title.text not in ["User Password", "Admin Password"]:
+                title_contexts = False
+        assert num_password_title == 2
+        assert title_contexts
+
+    @pytest.mark.parametrize(
+        "name, passwd, base_url",
+        get_data(base_path + "/testcases/data/data_file.json")
+    )
+    def test_device_directory_basic(self, name, passwd, browser, base_url):
+        """
+        Name: Check Directory page
+        Test Step:
+        1. Open Device IP
+        2. Login
+        3. Check Directory basic page on web browser
+        CheckPoint: Directory
+        """
+        page = Grp261xLoginPage(browser)
+        page.get(str(base_url)+"/#page:contact_PHONEBOOK")
+        try:
+            assert page.login_box
+            page.custom_wait(12).until_not(lambda browser: page.popout_panel_glass)
+            page.username_input = name
+            page.password_input = passwd
+            sleep(1)
+            page.submit_button.click()
+        except BaseException:
+            pass
+
+        authed_page = Grp261xPageDirectory(browser)
+
 # class TestGrp261xReboot:
 #     @pytest.mark.parametrize(
 #         "name, passwd, base_url",
@@ -217,6 +315,7 @@ class TestGrp261x:
 #         for func_btn in authed_page.navright_func_btns:
 #             print(func_btn)
 #         assert authed_page.navright_func_btns
+# searchBox.value_of_css_property(“font-family”)
 
 if __name__ == '__main__':
     pytest.main(["-v", "-s", "test_GRP261x_Context.py::TestGrp261x::test_device_login"])

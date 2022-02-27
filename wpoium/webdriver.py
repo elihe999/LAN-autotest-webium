@@ -8,6 +8,7 @@ from selenium.common.exceptions import NoAlertPresentException
 from appium.webdriver.common.touch_action import TouchAction as MobileTouchAction
 from selenium.webdriver.support.ui import Select, WebDriverWait
 from wpoium.page_objects import PageObject
+import json
 
 
 class Page(PageObject):
@@ -22,7 +23,7 @@ class Page(PageObject):
         """
         if js is None:
             raise ValueError("Please input js script")
-        
+
         return self.driver.execute_script(js, *args)
 
     def window_scroll(self, width=None, height=None):
@@ -313,7 +314,8 @@ class Page(PageObject):
         """
         warnings.warn("use driver.elem.drag_and_drop_by_offset(x, y) instead",
                       DeprecationWarning, stacklevel=2)
-        ActionChains(self.driver).drag_and_drop_by_offset(elem, xoffset=x, yoffset=y).perform()
+        ActionChains(self.driver).drag_and_drop_by_offset(
+            elem, xoffset=x, yoffset=y).perform()
 
     def refresh_element(self, elem, timeout=10):
         """
@@ -338,7 +340,8 @@ class Page(PageObject):
             else:
                 sleep(1)
         else:
-            raise TimeoutError("stale element reference: element is not attached to the page document.")
+            raise TimeoutError(
+                "stale element reference: element is not attached to the page document.")
 
     def top(self, elem, x, y, count):
         """
@@ -374,3 +377,21 @@ class Page(PageObject):
     def custom_wait(self, waitname=8):
         number = int(waitname)
         return WebDriverWait(self.driver, number)
+
+    def write_requests_log(self):
+        # logs = [json.loads(log['message'])['message']
+        #         for log in self.driver.get_log('performance')]
+        # file = open('devtools.json', 'w', encoding='utf-8')
+        # for entry in self.driver.get_log('performance'):
+        #     params = json.loads(entry.get('message')).get('message')
+        #     file.write(json.dumps(params))
+        # file.close()
+
+        import codecs
+        info=[]
+        for entry in self.driver.get_log('browser'):
+            if entry['level']=='SEVERE':
+                info.append(entry)
+        j = json.dumps(info, indent=4,ensure_ascii=False)
+        with codecs.open('devtools.json', "w", "utf-8") as f:
+                f.write(j)
