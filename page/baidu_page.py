@@ -1,6 +1,12 @@
 from wpoium import Page, Element
+from wpoium.plugins import cvs_helper
 
+from os.path import dirname, abspath
+import sys
 
+base_path = dirname(dirname(abspath(__file__)))
+sys.path.insert(0, base_path)
+wordlist = cvs_helper.load_custom_loc('preset_elm/my_baidu_example.csv')
 class BaiduPage(Page):
     search_input = Element(id_="kw", describe="搜索框")
     search_button = Element(id_="su", describe="搜索按钮")

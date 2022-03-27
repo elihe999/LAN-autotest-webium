@@ -18,11 +18,6 @@ pip install browsermob-proxy
 - File Upload / Download
 - Error catching
 ## Configuration
-
-## module
-
-- click
-- pytest: 
 ### preset string
 
 ```python

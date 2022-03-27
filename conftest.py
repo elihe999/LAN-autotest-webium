@@ -14,9 +14,9 @@ REPORT_DIR = BASE_DIR + "/output/"
 proxy = None
 
 # 定义基本测试环境
-@pytest.fixture(scope='function')
-def base_url():
-    return RunConfig.url
+# @pytest.fixture(scope='function')
+# def base_url():
+#     return RunConfig.url
 
 
 # 设置用例描述表头
@@ -35,12 +35,12 @@ def pytest_configure(config):
     # 添加接口地址与项目名称
     config._metadata["项目名称"] = "GSATE Web UI"
     # 删除Java_Home
-    config._metadata.pop("JAVA_HOME")
+    # config._metadata.pop("JAVA_HOME")
 
 @pytest.mark.optionalhook
 def pytest_html_results_summary(prefix):
     prefix.extend([html.p("Auto Test Version: 0.0.1 Preview")])
-    prefix.extend([html.p("DUT Version: GRP260x")])
+    prefix.extend([html.p("Test Suite Version: VOIP R&S Team")])
 
 @pytest.mark.hookwrapper
 def pytest_runtest_makereport(item):
@@ -223,6 +223,23 @@ def browser_close():
     driver.quit()
     print("test end!")
 
+def pytest_addoption(parser):
+    parser.addoption("--name", action="store", default="default name")
+    parser.addoption("--base_url", action="store", default="default name")
+    parser.addoption("--passwd", action="store", default="default name")
+
+# create argument
+def pytest_generate_tests(metafunc):
+    # This is called for every test. Only get/set command line arguments
+    # if the argument is specified in the list of test "fixturenames".
+    option_value = metafunc.config.option.name
+    if 'name' in metafunc.fixturenames and option_value is not None:
+        metafunc.parametrize("name", [option_value])
+    if 'passwd' in metafunc.fixturenames and option_value is not None:
+        metafunc.parametrize("passwd", [option_value])
+    if 'base_url' in metafunc.fixturenames and option_value is not None:
+        metafunc.parametrize("base_url", [option_value])
+    
 
 if __name__ == "__main__":
     capture_screenshots("test_dir/test_baidu_search.test_search_python.png")

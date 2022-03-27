@@ -45,10 +45,6 @@ class TestGrp261x:
 
     """Basic Test"""
     @pytest.mark.run(order=1)
-    @pytest.mark.parametrize(
-        "name, passwd, base_url",
-        get_data(base_path + "/testcases/data/data_file.json")
-    )
     def test_device_title(self, name, passwd, browser, base_url):
         """
         Name: Check Web Title
@@ -66,10 +62,6 @@ class TestGrp261x:
         assert browser.title == "Grandstream | Executive IP Phone"
 
     @pytest.mark.run(order=2)
-    @pytest.mark.parametrize(
-        "name, passwd, base_url",
-        get_data(base_path + "/testcases/data/data_file.json")
-    )
     def test_device_login(self, name, passwd, browser, base_url):
         """
         Name: Check Login
